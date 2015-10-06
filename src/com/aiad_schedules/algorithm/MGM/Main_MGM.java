@@ -1,4 +1,4 @@
-package com.aiad_shedules.algorithm.MGM;
+package com.aiad_schedules.algorithm.MGM;
 
 /**
  * Created by RGeneral24 on 04/10/2015.

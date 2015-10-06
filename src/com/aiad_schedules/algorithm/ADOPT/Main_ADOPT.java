@@ -1,4 +1,4 @@
-package com.aiad_shedules.algorithm.ADOPT;
+package com.aiad_schedules.algorithm.ADOPT;
 
 /**
  * Created by RGeneral24 on 04/10/2015.
