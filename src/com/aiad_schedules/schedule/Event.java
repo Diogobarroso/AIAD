@@ -3,20 +3,17 @@ package com.aiad_schedules.schedule;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
-/**
- * Created by RGeneral24 on 06/10/2015.
- */
 public class Event {
 
-    static protected short FirstSlot = 8;
-    static protected short LastSlot = 20;
+    static protected int FirstSlot = 8;
+    static protected int LastSlot = 19;
 
-    static private short Hour;
-    static private String Description;
-    static private ArrayList<String> Intervenients;
-    static private short Priority;
+    private int Hour;
+    private String Description;
+    private ArrayList<String> Intervenients = new ArrayList<>();
+    private int Priority;
 
-    public Event(){
+    public Event() {
 
         Hour = 8;
         Description = "";
@@ -24,16 +21,18 @@ public class Event {
         Priority = 0;
     }
 
-    public Event(short hour) throws InvalidObjectException {
+    public Event(int hour) throws InvalidObjectException {
 
-        Hour = (short) (8 + hour);
+        Hour = hour;
 
-        if(Hour < FirstSlot){
+        if (Hour < FirstSlot) {
+
             String Error = "Invalid Hour Slot! Needs to be at least 8 and lower than 20! " + "Value is: " + Hour + "!";
             throw new InvalidObjectException(Error);
         }
 
-        if(Hour > LastSlot){
+        if (Hour > LastSlot) {
+
             String Error = "Invalid Hour Slot! Needs to be at least 8 and lower than 20! " + "Value is: " + Hour + "!";
             throw new InvalidObjectException(Error);
         }
@@ -43,16 +42,18 @@ public class Event {
         Priority = 0;
     }
 
-    public Event(short hour, String description, short priority) throws InvalidObjectException {
+    public Event(int hour, String description, int priority) throws InvalidObjectException {
 
-        Hour = (short) (8 + hour);
+        Hour = hour;
 
-        if(Hour < FirstSlot){
+        if (Hour < FirstSlot) {
+
             String Error = "Invalid Hour Slot! Needs to be at least 8 and lower than 20! " + "Value is: " + Hour + "!";
             throw new InvalidObjectException(Error);
         }
 
-        if(Hour > LastSlot){
+        if (Hour > LastSlot) {
+
             String Error = "Invalid Hour Slot! Needs to be at least 8 and lower than 20! " + "Value is: " + Hour + "!";
             throw new InvalidObjectException(Error);
         }
@@ -62,16 +63,18 @@ public class Event {
         Priority = priority;
     }
 
-    public Event(short hour, String description, ArrayList<String> intervenients, short priority) throws InvalidObjectException {
+    public Event(int hour, String description, ArrayList<String> intervenients, int priority) throws InvalidObjectException {
 
-        Hour = (short) (8 + hour);
+        Hour = hour;
 
-        if(Hour < FirstSlot){
+        if (Hour < FirstSlot) {
+
             String Error = "Invalid Hour Slot! Needs to be at least 8 and lower than 20! " + "Value is: " + Hour + "!";
             throw new InvalidObjectException(Error);
         }
 
-        if(Hour > LastSlot){
+        if (Hour > LastSlot) {
+
             String Error = "Invalid Hour Slot! Needs to be at least 8 and lower than 20! " + "Value is: " + Hour + "!";
             throw new InvalidObjectException(Error);
         }
@@ -81,42 +84,42 @@ public class Event {
         Priority = priority;
     }
 
-    public static short getHour() {
+    public int getHour() {
 
         return Hour;
     }
 
-    public static String getDescription() {
+    public String getDescription() {
 
         return Description;
     }
 
-    public static ArrayList<String> getIntervenients() {
+    public ArrayList<String> getIntervenients() {
 
         return Intervenients;
     }
 
-    public static short getPriority() {
+    public int getPriority() {
 
         return Priority;
     }
 
-    public static void setDescription(String description) {
+    public void setDescription(String description) {
 
         Description = description;
     }
 
-    public static void setIntervenients(ArrayList<String> intervenients) {
+    public void setIntervenients(ArrayList<String> intervenients) {
 
         Intervenients = intervenients;
     }
 
-    public static void setPriority(short priority) {
+    public void setPriority(int priority) {
 
         Priority = priority;
     }
 
-    public String toString(){
+    public String toString() {
 
         return getHour() + " - Description: " + getDescription()
                 + " - Intervenients: " + getIntervenients().toString()

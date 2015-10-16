@@ -1,12 +1,11 @@
 package com.aiad_schedules.agent;
 
 import com.aiad_schedules.schedule.Schedule;
+import com.aiad_schedules.input.csvReader;
 
+import java.io.IOException;
 import java.io.InvalidObjectException;
 
-/**
- * Created by RGeneral24 on 04/10/2015.
- */
 public class Agent {
 
     static private String AgentName;
@@ -17,14 +16,11 @@ public class Agent {
         AgentName = "";
         AgentSchedule = new Schedule();
     }
-/*
-    public Agent(String agentfile){
 
-    }
-*/
-    public Agent(String agentname) throws InvalidObjectException {
-        AgentName = agentname;
-        AgentSchedule = new Schedule();
+    public Agent(String agentFile) throws IOException {
+
+        AgentName = csvReader.getUser(agentFile);
+        AgentSchedule = csvReader.getSchedule(agentFile);
     }
 
     public static String getAgentName() {

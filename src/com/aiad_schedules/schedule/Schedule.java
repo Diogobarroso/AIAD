@@ -3,14 +3,11 @@ package com.aiad_schedules.schedule;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
-/**
- * Created by RGeneral24 on 04/10/2015.
- */
 public class Schedule {
 
     static protected short TotalDays = 5;
 
-    static private ArrayList<Day> Weekdays;
+    private ArrayList<Day> Weekdays = new ArrayList<>();
 
     public Schedule() throws InvalidObjectException{
 
@@ -20,12 +17,12 @@ public class Schedule {
         }
     }
 
-    public static ArrayList<Day> getWeekdays() {
+    public ArrayList<Day> getWeekdays() {
 
         return Weekdays;
     }
 
-    public static void setWeekdays(ArrayList<Day> weekdays) {
+    public void setWeekdays(ArrayList<Day> weekdays) {
 
         Weekdays = weekdays;
     }
@@ -54,7 +51,7 @@ public class Schedule {
                     out += "Friday: \n";
                     break;
             }
-            out += "\t" + getWeekdays().get(i).toString() + "\n";
+            out += getWeekdays().get(i).toString() + "\n";
         }
 
         return out;
