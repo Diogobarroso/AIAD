@@ -79,8 +79,20 @@ public class Event {
             throw new InvalidObjectException(Error);
         }
 
-        Description = description;
-        Intervenients = intervenients;
+        if (description.equals("null")){
+
+            Description = "";
+        }
+        else {
+
+            Description = description;
+        }
+
+        if (intervenients.get(0).equals("null") && intervenients.size() == 1) {
+
+            Intervenients = intervenients;
+        }
+
         Priority = priority;
     }
 
