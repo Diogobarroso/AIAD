@@ -2,22 +2,23 @@ package com.aiad_schedules.agent;
 
 import com.aiad_schedules.schedule.Schedule;
 import com.aiad_schedules.input.csvReader;
+import jade.core.*;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
 
-public class Agent {
+public class Base_Agent extends Agent {
 
     static private String AgentName;
     static private Schedule AgentSchedule;
 
-    public Agent() throws InvalidObjectException {
+    public Base_Agent() throws InvalidObjectException {
 
         AgentName = "";
         AgentSchedule = new Schedule();
     }
 
-    public Agent(String agentFile) throws IOException {
+    public Base_Agent(String agentFile) throws IOException {
 
         AgentName = csvReader.getUser(agentFile);
         AgentSchedule = csvReader.getSchedule(agentFile);

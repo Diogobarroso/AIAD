@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-// Reads the related CSV file with the schedule information of an Agent
+// Reads the related CSV file with the schedule information of an Base_Agent
 public class csvReader {
 
     // Checks if it is a CSV file
@@ -38,7 +38,7 @@ public class csvReader {
 
     }
 
-    // Gets the User/Agent name from CSV file
+    // Gets the User/Base_Agent name from CSV file
     public static String getUser(String csvFile) throws IOException {
 
         String fileUser;
@@ -67,7 +67,7 @@ public class csvReader {
             }
         } else {
 
-            String Error = "Agent name in file Undetected!";
+            String Error = "Base_Agent name in file Undetected!";
             bufferFile.close();
             throw new IOException(Error);
         }
