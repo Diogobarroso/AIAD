@@ -3,16 +3,20 @@ package com.aiad_schedules.schedule;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
+// Event of a day in the schedule (meeting)
 public class Event {
 
+    // Static References
     static protected int FirstSlot = 8;
     static protected int LastSlot = 19;
 
+    // Variables
     private int Hour;
     private String Description;
     private ArrayList<String> Intervenients = new ArrayList<>();
     private int Priority;
 
+    // Constructors
     public Event() {
 
         Hour = 8;
@@ -96,6 +100,7 @@ public class Event {
         Priority = priority;
     }
 
+    // Gets
     public int getHour() {
 
         return Hour;
@@ -116,6 +121,7 @@ public class Event {
         return Priority;
     }
 
+    // Sets
     public void setDescription(String description) {
 
         Description = description;
@@ -131,6 +137,7 @@ public class Event {
         Priority = priority;
     }
 
+    // Functions
     public String toString() {
 
         return getHour() + " - Description: " + getDescription()

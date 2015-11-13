@@ -3,12 +3,16 @@ package com.aiad_schedules.schedule;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
+// Schedule of an Agent
 public class Schedule {
 
+    // Static References
     static protected short TotalDays = 5;
 
+    // Variables
     private ArrayList<Day> Weekdays = new ArrayList<>();
 
+    // Constructors
     public Schedule() throws InvalidObjectException{
 
         for(short i = 0; i < TotalDays; i++){
@@ -17,16 +21,19 @@ public class Schedule {
         }
     }
 
+    // Gets
     public ArrayList<Day> getWeekdays() {
 
         return Weekdays;
     }
 
+    // Sets
     public void setWeekdays(ArrayList<Day> weekdays) {
 
         Weekdays = weekdays;
     }
 
+    // Functions
     public String toString(){
 
         String out = "";

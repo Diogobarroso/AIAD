@@ -1,6 +1,5 @@
 package com.aiad_schedules.input;
 
-import com.aiad_schedules.schedule.Event;
 import com.aiad_schedules.schedule.Schedule;
 
 import java.io.BufferedReader;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-// Reads the related CSV file with the schedule information of an Base_Agent
+// Reads the related CSV file with the schedule information of an ABT
 public class csvReader {
 
     // Checks if it is a CSV file
@@ -21,10 +20,7 @@ public class csvReader {
 
         if (fileName.length == 2) {
 
-            if (fileName[1].equals("csv")) {
-
-                return;
-            } else {
+            if (!fileName[1].equals("csv")) {
 
                 String Error = "Invalid File! Must be a \".csv\" file!";
                 throw new IOException(Error);
@@ -35,10 +31,9 @@ public class csvReader {
             String Error = "Invalid File! Must be a \".csv\" file!";
             throw new IOException(Error);
         }
-
     }
 
-    // Gets the User/Base_Agent name from CSV file
+    // Gets the User/Agent name from CSV file
     public static String getUser(String csvFile) throws IOException {
 
         String fileUser;
@@ -67,7 +62,7 @@ public class csvReader {
             }
         } else {
 
-            String Error = "Base_Agent name in file Undetected!";
+            String Error = "ABT name in file Undetected!";
             bufferFile.close();
             throw new IOException(Error);
         }
@@ -116,5 +111,4 @@ public class csvReader {
 
         return fileSchedule;
     }
-
 }
