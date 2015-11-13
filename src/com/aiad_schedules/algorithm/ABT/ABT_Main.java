@@ -11,6 +11,7 @@ import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 // Main ABT based Agent Class
 public class ABT_Main extends Agent {
@@ -65,11 +66,12 @@ public class ABT_Main extends Agent {
         System.out.println("Agent "+ getAID().getName() +" starting.");
 
         // Set Agent info
-        ABT_Agent.setAgentName(getAID().getName());
+        String[] nameTrim = getAID().getName().split(Pattern.quote("@"));
+        ABT_Agent.setAgentName(nameTrim[0]);
         try {
 
             // All files present in the "files" directory
-            ABT_Agent.setAgentSchedule("files/" + getAID().getName() + ".csv");
+            ABT_Agent.setAgentSchedule("files/" + nameTrim[0] + ".csv");
         }
         catch (IOException e){
 
@@ -102,7 +104,7 @@ public class ABT_Main extends Agent {
         try {
 
             DFAgentDescription[] equalAgents = DFService.search(this, equalAgent);
-            if(equalAgents.length != 0){
+            if(equalAgents.length > 1){
 
                 System.err.println("Found equal Agent! Agents must be unique!");
                 doDelete();
