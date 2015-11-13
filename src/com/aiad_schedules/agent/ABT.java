@@ -1,19 +1,22 @@
 package com.aiad_schedules.agent;
 
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
 
-public class ABT_Agent extends Base_Agent {
+// Agent with ABT algorithm structure
+public class ABT extends Base {
 
+    // Variables
     private ArrayList<String> NoGood = new ArrayList<>();
     private ArrayList<String> AgentView = new ArrayList<>();
 
-    public ABT_Agent() throws InvalidObjectException {
+    // Constructors
+    public ABT(){
 
         super();
     }
 
-    public ArrayList<String> getNoGood() {
+    // Gets
+        public ArrayList<String> getNoGood() {
 
         return NoGood;
     }
@@ -23,6 +26,7 @@ public class ABT_Agent extends Base_Agent {
         return AgentView;
     }
 
+    // Sets
     public void setNoGood(ArrayList<String> noGood) {
 
         NoGood = noGood;
