@@ -1,8 +1,10 @@
 package com.aiad_schedules.algorithm.ABT;
 
 import com.aiad_schedules.agent.ABT;
+import com.aiad_schedules.algorithm.ABT.ABT_Procedures;
 
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -17,7 +19,7 @@ import java.util.regex.Pattern;
 public class ABT_Main extends Agent {
 
     // ### DEBUG ###
-    static public boolean DEBUG = false;
+    static public boolean DEBUG = true;
     // ### DEBUG ###
 
     // Variables
@@ -29,6 +31,7 @@ public class ABT_Main extends Agent {
     // Simple Test Message
     class ABT_Behaviour extends SimpleBehaviour {
 
+        // Variables
         protected int counter = 0;
 
         // Constructor
@@ -68,6 +71,60 @@ public class ABT_Main extends Agent {
 
     }
     // ### TESTING ### //
+
+    // ABT Kernel Behaviour Class
+    class ABT_Kernel extends Behaviour {
+
+        // Variables
+        protected short end = 0;
+
+        // Constructor
+        public ABT_Kernel(Agent a) {
+
+            super(a);
+        }
+
+        // Behaviour Action
+        public void action () {
+
+            ACLMessage msg = blockingReceive();
+
+            if (msg.getPerformative() == ACLMessage.INFORM) {
+
+                if (DEBUG) System.out.println(getLocalName() + ": recebi " + msg.getContent());
+
+                String[] msgDecode = msg.getContent().split(Pattern.quote(" "));
+
+                // Check values with Agent View
+                ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msgDecode);
+
+                // ok? Message Actions
+                if(msgDecode[0].equals("ok?")){
+
+                    ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msgDecode);
+                }
+
+                // ngd Message Actions
+                if(msgDecode[0].equals("ngd")){
+
+                    ABT_Procedures.ABT_ResolveConflict(ABT_Agent, msgDecode);
+                }
+
+                // stp Message Action
+                if(msgDecode[0].equals("stp")){
+
+                    // Terminates the action
+                    end = 1;
+                }
+            }
+        }
+
+        // Behaviour Finish
+        public boolean done() {
+
+            return end == 1;
+        }
+    }
 
     // Agent Setup Operations
     protected void setup() {
