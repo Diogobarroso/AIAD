@@ -20,7 +20,7 @@ public class ABT_Main extends Agent {
 
     // ### DEBUG ###
     static public boolean DEBUG = true;
-    // ### DEBUG ###
+    // ### END DEBUG ###
 
     // Variables
     public ABT ABT_Agent = new ABT();
@@ -70,13 +70,13 @@ public class ABT_Main extends Agent {
         }
 
     }
-    // ### TESTING ### //
+    // ### END TESTING ### //
 
     // ABT Kernel Behaviour Class
     class ABT_Kernel extends Behaviour {
 
         // Variables
-        protected short end = 0;
+        protected short end = 0; // Kernel Control
 
         // Constructor
         public ABT_Kernel(Agent a) {
@@ -99,7 +99,7 @@ public class ABT_Main extends Agent {
                 ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msgDecode);
 
                 // ok? Message Actions
-                if(msgDecode[0].equals("ok?")){
+                if(msgDecode[0].equals("ok?")){ // !!! woks as starting message !!!
 
                     ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msgDecode);
                 }
