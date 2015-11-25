@@ -83,11 +83,10 @@ public class Event {
             throw new InvalidObjectException(Error);
         }
 
-        if (description.equals("null")){
+        if (description.equals("null")) {
 
             Description = "";
-        }
-        else {
+        } else {
 
             Description = description;
         }
@@ -143,5 +142,17 @@ public class Event {
         return getHour() + " - Description: " + getDescription()
                 + " - Intervenients: " + getIntervenients().toString()
                 + " - " + "Priority: " + getPriority();
+    }
+
+    public ArrayList<String> setArrayList(String[] in) {
+
+        ArrayList<String> out = new ArrayList<>();
+
+        for (int i = 0; i < in.length; i++) {
+
+            out.add(in[i]);
+        }
+
+        return out;
     }
 }

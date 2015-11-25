@@ -1,8 +1,8 @@
 package com.aiad_schedules.algorithm.ABT;
 
 import com.aiad_schedules.agent.ABT;
-import com.aiad_schedules.algorithm.ABT.ABT_Procedures;
 
+import com.aiad_schedules.schedule.Event;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.SimpleBehaviour;
@@ -18,12 +18,14 @@ import java.util.regex.Pattern;
 // Main ABT based Agent Class
 public class ABT_Main extends Agent {
 
-    // ### DEBUG ###
+    // ### ACTIVATE FOR TXT DEBUG ###
     static public boolean DEBUG = true;
-    // ### END DEBUG ###
+    // ### ACTIVATE FOR TXT DEBUG ###
 
     // Variables
-    public ABT ABT_Agent = new ABT();
+    private ABT ABT_Agent = new ABT();
+    private int Control_Day = -1;
+    private Event Control_Event = null;
 
     // Internal Behaviour Classes
 
@@ -41,19 +43,19 @@ public class ABT_Main extends Agent {
         }
 
         // Behaviour Action
-        public void action(){
+        public void action() {
 
             //ACLMessage msg = receive();
             ACLMessage msg = blockingReceive();
 
-            if(msg.getPerformative() == ACLMessage.INFORM) {
+            if (msg.getPerformative() == ACLMessage.INFORM) {
 
                 System.out.println(getLocalName() + ": recebi " + msg.getContent());
             }
 
             ACLMessage reply = msg.createReply();
 
-            if(msg.getContent().equals("hello")){
+            if (msg.getContent().equals("hello")) {
 
                 reply.setContent("hi");
                 send(reply);
@@ -85,35 +87,41 @@ public class ABT_Main extends Agent {
         }
 
         // Behaviour Action
-        public void action () {
+        public void action() {
 
-            ACLMessage msg = blockingReceive();
+            ACLMessage msgReceived = blockingReceive();
 
-            if (msg.getPerformative() == ACLMessage.INFORM) {
+            if (msgReceived.getPerformative() == ACLMessage.QUERY_IF) {
 
-                if (DEBUG) System.out.println(getLocalName() + ": recebi " + msg.getContent());
 
-                String[] msgDecode = msg.getContent().split(Pattern.quote(" "));
+            }
+            if (msgReceived.getPerformative() == ACLMessage.INFORM) {
+
+                if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
+
+                String[] msgDecode = msgReceived.getContent().split(Pattern.quote(" "));
+
+                ABT_Message msg = new ABT_Message(msgDecode);
 
                 // Check values with Agent View
-                ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msgDecode);
+                ABT_Agent = ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msg);
 
                 // ok? Message Actions
-                if(msgDecode[0].equals("ok?")){ // !!! woks as starting message !!!
+                if (msg.getType().equals("ok?")) { // !!! works as starting message !!!
 
-                    ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msgDecode);
+                    ABT_Agent = ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg);
                 }
 
                 // ngd Message Actions
-                if(msgDecode[0].equals("ngd")){
+                if (msg.getType().equals("ngd")) {
 
-                    ABT_Procedures.ABT_ResolveConflict(ABT_Agent, msgDecode);
+                    ABT_Agent = ABT_Procedures.ABT_ResolveConflict(ABT_Agent, msg);
                 }
 
                 // stp Message Action
-                if(msgDecode[0].equals("stp")){
+                if (msg.getType().equals("stp")) {
 
-                    // Terminates the action
+                    // Terminates the Agent
                     end = 1;
                 }
             }
@@ -129,7 +137,7 @@ public class ABT_Main extends Agent {
     // Agent Setup Operations
     protected void setup() {
 
-        System.out.println("Agent "+ getAID().getName() +" starting.");
+        if (DEBUG) System.out.println("Agent " + getAID().getName() + " starting.");
 
         // Set Agent info
         String[] nameTrim = getAID().getName().split(Pattern.quote("@"));
@@ -138,8 +146,7 @@ public class ABT_Main extends Agent {
 
             // All files present in the "files" directory
             ABT_Agent.setAgentSchedule("files/" + nameTrim[0] + ".csv");
-        }
-        catch (IOException e){
+        } catch (IOException e) {
 
             doDelete();
             e.printStackTrace();
@@ -156,7 +163,7 @@ public class ABT_Main extends Agent {
         try {
 
             DFService.register(this, dfd);
-        } catch(FIPAException e) {
+        } catch (FIPAException e) {
 
             doDelete();
             System.err.println("Error Detected! Can't Register Agent!");
@@ -172,13 +179,12 @@ public class ABT_Main extends Agent {
         try {
 
             DFAgentDescription[] equalAgents = DFService.search(this, equalAgent);
-            if(equalAgents.length > 1){
+            if (equalAgents.length > 1) {
 
                 System.err.println("Found equal Agent! Agents must be unique!");
                 doDelete();
             }
-        }
-        catch(FIPAException e) {
+        } catch (FIPAException e) {
 
             doDelete();
             e.printStackTrace();
@@ -194,10 +200,12 @@ public class ABT_Main extends Agent {
         Object[] args = getArguments();
 
         // If there are arguments its an initiator agent
-        if(args != null && args.length > 0) {
+        if (args != null && args.length > 0) {
 
             String[] arguments = (String[]) args;
-            if(arguments[0].equals("start")){ // TEMP: start sample transaction
+
+
+            if (arguments[0].equals("start")) {
 
                 DFAgentDescription targetAgent = new DFAgentDescription();
                 ServiceDescription targetService = new ServiceDescription();
@@ -211,9 +219,9 @@ public class ABT_Main extends Agent {
 
                     msg.addReceiver(searchAgent[0].getName()); // send to agent
                     msg.setContent("hello");
+
                     send(msg);
-                }
-                catch (FIPAException e) {
+                } catch (FIPAException e) {
 
                     doDelete();
                     e.printStackTrace();
@@ -225,8 +233,8 @@ public class ABT_Main extends Agent {
     }
 
     // Agent Shutdown
-    protected void takeDown(){
+    protected void takeDown() {
 
-        System.out.println("Agent "+ getAID().getName() +" terminating.");
+        System.out.println("Agent " + getAID().getName() + " terminating.");
     }
 }

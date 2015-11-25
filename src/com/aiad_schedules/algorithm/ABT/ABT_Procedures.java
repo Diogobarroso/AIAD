@@ -5,18 +5,22 @@ import com.aiad_schedules.agent.ABT;
 // PROTOTYPE
 public class ABT_Procedures {
 
-    public static void ABT_CheckAgentView(ABT Agent, String[] msgDecode){
+    public static ABT ABT_CheckAgentView(ABT Agent, ABT_Message msg) {
 
-        Agent.getAgentSchedule().getWeekdays()
+
+
+        return Agent;
     }
 
-    public static void ABT_ProcessInfo(ABT Agent, String[] msgDecode){
+    public static ABT ABT_ProcessInfo(ABT Agent, ABT_Message msg) {
 
 
+        return Agent;
     }
 
-    public static void ABT_ResolveConflict(ABT Agent, String[] msgDecode){
+    public static ABT ABT_ResolveConflict(ABT Agent, ABT_Message msg) {
 
 
+        return Agent;
     }
 }

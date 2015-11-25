@@ -10,13 +10,13 @@ public class ABT extends Base {
     private ArrayList<String> AgentView = new ArrayList<>();
 
     // Constructors
-    public ABT(){
+    public ABT() {
 
         super();
     }
 
     // Gets
-        public ArrayList<String> getNoGood() {
+    public ArrayList<String> getNoGood() {
 
         return NoGood;
     }
