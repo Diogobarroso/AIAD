@@ -155,4 +155,18 @@ public class Event {
 
         return out;
     }
+
+    public boolean equals(Event e) {
+
+        if (this.Hour != e.Hour) {
+
+            return false;
+        }
+        if (!(this.Description.equals(e.Description))){
+
+            return false;
+        }
+        return this.Priority == e.Priority;
+
+    }
 }

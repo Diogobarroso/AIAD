@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class ABT extends Base {
 
     // Variables
-    private ArrayList<String> NoGood = new ArrayList<>();
-    private ArrayList<String> AgentView = new ArrayList<>();
+    private ArrayList<Stored> NoGood = new ArrayList<>();
+    private ArrayList<Stored> AgentView = new ArrayList<>();
 
     // Constructors
     public ABT() {
@@ -16,23 +16,23 @@ public class ABT extends Base {
     }
 
     // Gets
-    public ArrayList<String> getNoGood() {
+    public ArrayList<Stored> getNoGood() {
 
         return NoGood;
     }
 
-    public ArrayList<String> getAgentView() {
+    public ArrayList<Stored> getAgentView() {
 
         return AgentView;
     }
 
     // Sets
-    public void setNoGood(ArrayList<String> noGood) {
+    public void setNoGood(ArrayList<Stored> noGood) {
 
         NoGood = noGood;
     }
 
-    public void setAgentView(ArrayList<String> agentView) {
+    public void setAgentView(ArrayList<Stored> agentView) {
 
         AgentView = agentView;
     }
