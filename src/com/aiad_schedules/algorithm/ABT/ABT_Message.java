@@ -1,5 +1,8 @@
 package com.aiad_schedules.algorithm.ABT;
 
+import java.util.ArrayList;
+import java.util.StringJoiner;
+
 // ABT Agent Message Structure Class
 public class ABT_Message {
 
@@ -9,10 +12,10 @@ public class ABT_Message {
     private int priority;
     private int day;
     private int hour;
-    private String[] intervenients;
+    private ArrayList<String> intervenients = new ArrayList<>();
 
     // Constructors
-    public ABT_Message(String type, String description, int priority, int day, int hour, String[] intervenients) {
+    public ABT_Message(String type, String description, int priority, int day, int hour, ArrayList<String> intervenients) {
 
         this.type = type;
         this.description = description;
@@ -41,11 +44,9 @@ public class ABT_Message {
 
         if (msg.length > 5) {
 
-            int j = 0;
             for (int i = 5; i < msg.length; i++) {
 
-                intervenients[j] = msg[i];
-                j++;
+                intervenients.add(msg[i]);
             }
         } else {
 
@@ -79,7 +80,7 @@ public class ABT_Message {
         return hour;
     }
 
-    public String[] getIntervenients() {
+    public ArrayList<String> getIntervenients() {
 
         return intervenients;
     }
@@ -110,20 +111,20 @@ public class ABT_Message {
         this.hour = hour;
     }
 
-    public void setIntervenients(String[] intervenients) {
+    public void setIntervenients(ArrayList<String> intervenients) {
 
         this.intervenients = intervenients;
     }
-    //(ok? reuniao-semanal-administracao 1 0 8 Jeremy)
+
     // Functions
     @Override
     public String toString(){
 
-        String out = getType() + " " + getDescription() + " " + getPriority() + " " + getDay() + " " + getHour();
+        String out = getType() + "," + getDescription() + "," + getPriority() + "," + getDay() + "," + getHour();
 
-        for(int i = 0; i < getIntervenients().length; i++){
+        for(int i = 0; i < getIntervenients().size(); i++){
 
-            out += " " + getIntervenients()[i];
+            out += "," + getIntervenients().get(i);
         }
 
         return out;

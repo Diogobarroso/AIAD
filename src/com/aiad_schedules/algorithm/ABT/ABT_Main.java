@@ -13,7 +13,6 @@ import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 // Main ABT based Agent Class
@@ -96,7 +95,7 @@ public class ABT_Main extends Agent {
 
                 if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
 
-                String[] msgDecode = msgReceived.getContent().split(Pattern.quote(" "));
+                String[] msgDecode = msgReceived.getContent().split(Pattern.quote(","));
 
                 ABT_Message msg = new ABT_Message(msgDecode);
 
@@ -106,6 +105,7 @@ public class ABT_Main extends Agent {
                 // ok? Message Actions
                 if (msg.getType().equals("ok?")) {
 
+                    end = true;
                     ABT_Agent = ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg);
                 }
 
@@ -200,8 +200,12 @@ public class ABT_Main extends Agent {
         // Reads arguments
         Object[] args = getArguments();
 
+        if (DEBUG) System.out.println("Before check");
+
         // If there are arguments its an initiator agent
-        if (args != null && args.length > 0) {
+        if (args != null && args.length > 1) {
+
+            if (DEBUG) System.out.println("After check " + args.length + " " + args[0].toString());
 
             ABT_Message arguments = new ABT_Message((String[]) args);
 
@@ -209,7 +213,7 @@ public class ABT_Main extends Agent {
 
                 try {
 
-                    Control_Event = new Event(arguments.getHour(), arguments.getDescription(), Event.setArrayList(arguments.getIntervenients()), arguments.getPriority());
+                    Control_Event = new Event(arguments.getHour(), arguments.getDescription(), arguments.getIntervenients(), arguments.getPriority());
                     Control_Day = arguments.getDay();
                 } catch (Exception e) {
 
@@ -217,14 +221,14 @@ public class ABT_Main extends Agent {
                 }
 
                 // Runs for every intervenient
-                for (int i = 0; i < arguments.getIntervenients().length; i++) {
+                for (int i = 0; i < arguments.getIntervenients().size(); i++) {
 
                     // Only in case the intervenient is not itself
-                    if (!arguments.getIntervenients()[i].equals(ABT_Agent.getAgentName())) {
+                    if (!arguments.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
 
                         DFAgentDescription targetAgent = new DFAgentDescription();
                         ServiceDescription targetService = new ServiceDescription();
-                        targetService.setType(arguments.getIntervenients()[i]);
+                        targetService.setType(arguments.getIntervenients().get(i));
                         targetAgent.addServices(targetService);
 
                         ACLMessage msg = new ACLMessage(ACLMessage.REQUEST); // REQUEST for 'adl' and 'ok?' messages
