@@ -114,4 +114,18 @@ public class ABT_Message {
 
         this.intervenients = intervenients;
     }
+    //(ok? reuniao-semanal-administracao 1 0 8 Jeremy)
+    // Functions
+    @Override
+    public String toString(){
+
+        String out = getType() + " " + getDescription() + " " + getPriority() + " " + getDay() + " " + getHour();
+
+        for(int i = 0; i < getIntervenients().length; i++){
+
+            out += " " + getIntervenients()[i];
+        }
+
+        return out;
+    }
 }

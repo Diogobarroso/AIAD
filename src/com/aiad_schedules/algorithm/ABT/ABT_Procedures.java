@@ -8,7 +8,6 @@ public class ABT_Procedures {
     public static ABT ABT_CheckAgentView(ABT Agent, ABT_Message msg) {
 
 
-
         return Agent;
     }
 
@@ -19,6 +18,12 @@ public class ABT_Procedures {
     }
 
     public static ABT ABT_ResolveConflict(ABT Agent, ABT_Message msg) {
+
+
+        return Agent;
+    }
+
+    public static ABT ABT_AddLink(ABT Agent, ABT_Message msg) {
 
 
         return Agent;

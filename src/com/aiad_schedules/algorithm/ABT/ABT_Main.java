@@ -13,6 +13,7 @@ import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 // Main ABT based Agent Class
@@ -29,7 +30,7 @@ public class ABT_Main extends Agent {
 
     // Internal Behaviour Classes
 
-    // ### TESTING ### //
+    /* ### TESTING ### //
     // Simple Test Message
     class ABT_Behaviour extends SimpleBehaviour {
 
@@ -72,13 +73,13 @@ public class ABT_Main extends Agent {
         }
 
     }
-    // ### END TESTING ### //
+    // ### END TESTING ### */
 
     // ABT Kernel Behaviour Class
-    class ABT_Kernel extends Behaviour {
+    class ABT_Kernel extends SimpleBehaviour {
 
         // Variables
-        protected short end = 0; // Kernel Control
+        protected boolean end = false; // Kernel Control
 
         // Constructor
         public ABT_Kernel(Agent a) {
@@ -91,10 +92,6 @@ public class ABT_Main extends Agent {
 
             ACLMessage msgReceived = blockingReceive();
 
-            if (msgReceived.getPerformative() == ACLMessage.QUERY_IF) {
-
-
-            }
             if (msgReceived.getPerformative() == ACLMessage.INFORM) {
 
                 if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
@@ -107,7 +104,7 @@ public class ABT_Main extends Agent {
                 ABT_Agent = ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msg);
 
                 // ok? Message Actions
-                if (msg.getType().equals("ok?")) { // !!! works as starting message !!!
+                if (msg.getType().equals("ok?")) {
 
                     ABT_Agent = ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg);
                 }
@@ -118,11 +115,17 @@ public class ABT_Main extends Agent {
                     ABT_Agent = ABT_Procedures.ABT_ResolveConflict(ABT_Agent, msg);
                 }
 
+                // adl Message Actions
+                if (msg.getType().equals("adl")) {
+
+                    ABT_Agent = ABT_Procedures.ABT_AddLink(ABT_Agent, msg);
+                }
+
                 // stp Message Action
                 if (msg.getType().equals("stp")) {
 
                     // Terminates the Agent
-                    end = 1;
+                    end = true;
                 }
             }
         }
@@ -130,7 +133,7 @@ public class ABT_Main extends Agent {
         // Behaviour Finish
         public boolean done() {
 
-            return end == 1;
+            return end;
         }
     }
 
@@ -190,10 +193,8 @@ public class ABT_Main extends Agent {
             e.printStackTrace();
         }
 
-        // ### TESTING ### //
-
-        // Creates Sample Behaviour
-        ABT_Behaviour b = new ABT_Behaviour(this);
+        // Creates the ABT Behaviour
+        ABT_Kernel b = new ABT_Kernel(this);
         addBehaviour(b);
 
         // Reads arguments
@@ -202,34 +203,48 @@ public class ABT_Main extends Agent {
         // If there are arguments its an initiator agent
         if (args != null && args.length > 0) {
 
-            String[] arguments = (String[]) args;
+            ABT_Message arguments = new ABT_Message((String[]) args);
 
+            if (arguments.getType().equals("ok?")) {
 
-            if (arguments[0].equals("start")) {
+                try {
 
-                DFAgentDescription targetAgent = new DFAgentDescription();
-                ServiceDescription targetService = new ServiceDescription();
-                targetService.setType("Jeremy"); // base find
-                targetAgent.addServices(targetService);
+                    Control_Event = new Event(arguments.getHour(), arguments.getDescription(), Event.setArrayList(arguments.getIntervenients()), arguments.getPriority());
+                    Control_Day = arguments.getDay();
+                } catch (Exception e) {
 
-                ACLMessage msg = new ACLMessage(ACLMessage.INFORM); // msg create
-                try { // try is needed for fipa dependencies
-
-                    DFAgentDescription[] searchAgent = DFService.search(this, targetAgent); // agent find
-
-                    msg.addReceiver(searchAgent[0].getName()); // send to agent
-                    msg.setContent("hello");
-
-                    send(msg);
-                } catch (FIPAException e) {
-
-                    doDelete();
                     e.printStackTrace();
+                }
+
+                // Runs for every intervenient
+                for (int i = 0; i < arguments.getIntervenients().length; i++) {
+
+                    // Only in case the intervenient is not itself
+                    if (!arguments.getIntervenients()[i].equals(ABT_Agent.getAgentName())) {
+
+                        DFAgentDescription targetAgent = new DFAgentDescription();
+                        ServiceDescription targetService = new ServiceDescription();
+                        targetService.setType(arguments.getIntervenients()[i]);
+                        targetAgent.addServices(targetService);
+
+                        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST); // REQUEST for 'adl' and 'ok?' messages
+                        try {
+
+                            DFAgentDescription[] searchAgent = DFService.search(this, targetAgent); // agent find
+
+                            msg.addReceiver(searchAgent[0].getName()); // send to agent
+                            msg.setContent(arguments.toString());
+
+                            send(msg);
+                        } catch (FIPAException e) {
+
+                            doDelete();
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }
-
-        // ### TESTING ### //
     }
 
     // Agent Shutdown

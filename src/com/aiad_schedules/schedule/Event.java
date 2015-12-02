@@ -137,6 +137,7 @@ public class Event {
     }
 
     // Functions
+    @Override
     public String toString() {
 
         return getHour() + " - Description: " + getDescription()
@@ -144,7 +145,7 @@ public class Event {
                 + " - " + "Priority: " + getPriority();
     }
 
-    public ArrayList<String> setArrayList(String[] in) {
+    public static ArrayList<String> setArrayList(String[] in) {
 
         ArrayList<String> out = new ArrayList<>();
 
