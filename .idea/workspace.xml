@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="59c18db9-ef34-4997-8126-15e0b7c4328f" name="Default" comment="ABT_Kernel v0.32&#10;-&gt; Initial message setup done&#10;-&gt; More Refactor">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/AIAD/com/aiad_schedules/input/csvReader.class" afterPath="$PROJECT_DIR$/out/production/AIAD/com/aiad_schedules/input/csvReader.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/AIAD/com/aiad_schedules/schedule/Event.class" afterPath="$PROJECT_DIR$/out/production/AIAD/com/aiad_schedules/schedule/Event.class" />
+    <list default="true" id="59c18db9-ef34-4997-8126-15e0b7c4328f" name="Default" comment="ABT_Kernel v0.33&#10;-&gt; More Fixes&#10;-&gt; Swapped the message system">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java" />
     </list>
     <ignored path="AIAD.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+              <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -41,11 +42,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ABT_Main.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ABT_Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.36528498">
-              <caret line="202" column="46" selection-start-line="202" selection-start-column="46" selection-end-line="202" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ABT_Procedures.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6915254">
+              <caret line="42" column="10" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="33" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+              <caret line="133" column="40" selection-start-line="133" selection-start-column="40" selection-end-line="133" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -69,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="139" column="13" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
+              <caret line="176" column="5" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -130,12 +143,12 @@
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/schedule/Schedule.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Stored.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/Stored.java" />
-        <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/agent/Stored.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java" />
-        <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" />
+        <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" />
+        <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java" />
       </list>
     </option>
   </component>
@@ -182,6 +195,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -374,9 +390,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1007,7 +1020,11 @@
       <workItem from="1448821725440" duration="387000" />
       <workItem from="1448822148206" duration="5878000" />
       <workItem from="1448917067079" duration="2615000" />
-      <workItem from="1449043497603" duration="6441000" />
+      <workItem from="1449043497603" duration="7640000" />
+      <workItem from="1449065309228" duration="1821000" />
+      <workItem from="1449130462432" duration="597000" />
+      <workItem from="1449134900813" duration="1372000" />
+      <workItem from="1449216233590" duration="8751000" />
     </task>
     <task id="LOCAL-00001" summary="Schedule Structure pre-csv reading (no testing done)">
       <created>1444153512532</created>
@@ -1087,11 +1104,17 @@
       <option name="project" value="LOCAL" />
       <updated>1449046560978</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="ABT_Kernel v0.33&#10;-&gt; More Fixes&#10;-&gt; Swapped the message system">
+      <created>1449050382797</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1449050382797</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114762000" />
+    <option name="totallyTimeSpent" value="128502000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -1099,12 +1122,11 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32686085" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32847896" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33009708" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33009708" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32868218" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15739386" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1115,6 +1137,7 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32686085" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1147,11 +1170,12 @@
     <MESSAGE value="ABT_Kernel v0.3 -&gt; NOT WORKING&#10;-&gt; Added new message class&#10;-&gt; Refactor some aspects" />
     <MESSAGE value="ABT_Kernel v0.31 -&gt; NOT WORKING&#10;-&gt; New NoGood/AgentView Structure" />
     <MESSAGE value="ABT_Kernel v0.32&#10;-&gt; Initial message setup done&#10;-&gt; More Refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="ABT_Kernel v0.32&#10;-&gt; Initial message setup done&#10;-&gt; More Refactor" />
+    <MESSAGE value="ABT_Kernel v0.33&#10;-&gt; More Fixes&#10;-&gt; Swapped the message system" />
+    <option name="LAST_COMMIT_MESSAGE" value="ABT_Kernel v0.33&#10;-&gt; More Fixes&#10;-&gt; Swapped the message system" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1163,8 +1187,20 @@
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1197,7 +1233,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1230,7 +1268,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1454,14 +1494,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/schedule/Day.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/Base.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1486,35 +1518,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/files/Anne.csv">
+    <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/schedule/Day.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6830509">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+        <state vertical-scroll-proportion="-0.5271186">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java">
+    <entry file="file://$PROJECT_DIR$/files/Anne.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.02881356">
+          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="139" column="13" selection-start-line="139" selection-start-column="13" selection-end-line="139" selection-end-column="13" />
+          <caret line="176" column="5" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1522,7 +1545,17 @@
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="33" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+          <caret line="133" column="40" selection-start-line="133" selection-start-column="40" selection-end-line="133" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1531,8 +1564,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.36528498">
-          <caret line="202" column="46" selection-start-line="202" selection-start-column="46" selection-end-line="202" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6915254">
+          <caret line="42" column="10" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -4,13 +4,13 @@ import com.aiad_schedules.agent.ABT;
 
 import com.aiad_schedules.schedule.Event;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -23,56 +23,12 @@ public class ABT_Main extends Agent {
     // ### ACTIVATE FOR TXT DEBUG ###
 
     // Variables
+    private boolean endService = false;
     private ABT ABT_Agent = new ABT();
     private int Control_Day = -1;
     private Event Control_Event = null;
 
     // Internal Behaviour Classes
-
-    /* ### TESTING ### //
-    // Simple Test Message
-    class ABT_Behaviour extends SimpleBehaviour {
-
-        // Variables
-        protected int counter = 0;
-
-        // Constructor
-        public ABT_Behaviour(Agent a) {
-
-            super(a);
-        }
-
-        // Behaviour Action
-        public void action() {
-
-            //ACLMessage msg = receive();
-            ACLMessage msg = blockingReceive();
-
-            if (msg.getPerformative() == ACLMessage.INFORM) {
-
-                System.out.println(getLocalName() + ": recebi " + msg.getContent());
-            }
-
-            ACLMessage reply = msg.createReply();
-
-            if (msg.getContent().equals("hello")) {
-
-                reply.setContent("hi");
-                send(reply);
-
-                counter++;
-            }
-        }
-
-        // Behaviour Finish
-        public boolean done() {
-
-            return counter == 1;
-            //return true;
-        }
-
-    }
-    // ### END TESTING ### */
 
     // ABT Kernel Behaviour Class
     class ABT_Kernel extends SimpleBehaviour {
@@ -89,37 +45,64 @@ public class ABT_Main extends Agent {
         // Behaviour Action
         public void action() {
 
-            ACLMessage msgReceived = blockingReceive();
+            // Receives a Message
+            MessageTemplate msgTemplate = MessageTemplate.MatchConversationId("ABT");
+            ACLMessage msgReceived = receive(msgTemplate);
 
-            if (msgReceived.getPerformative() == ACLMessage.INFORM) {
+            if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
 
-                if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
+            String[] msgDecode = msgReceived.getContent().split(Pattern.quote(","));
+            String msgSender = msgReceived.getSender().getName().split(Pattern.quote("@"))[0];
 
-                String[] msgDecode = msgReceived.getContent().split(Pattern.quote(","));
+            ABT_Message msg = new ABT_Message(msgDecode);
 
-                ABT_Message msg = new ABT_Message(msgDecode);
+            // Check values with Agent View
+            try {
 
-                // Check values with Agent View
-                ABT_Agent = ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msg);
+                ABT_Agent = ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msg, msgSender);
+            } catch (Exception e) {
 
-                // ok? Message Actions
-                if (msg.getType().equals("ok?")) {
-
-                    end = true;
-                    ABT_Agent = ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg);
-                }
-
-                // ngd Message Actions
-                if (msg.getType().equals("ngd")) {
-
-                    ABT_Agent = ABT_Procedures.ABT_ResolveConflict(ABT_Agent, msg);
-                }
+                e.printStackTrace();
+            }
+            // Processes the Message
+            if (msgReceived.getPerformative() == ACLMessage.REQUEST) {
 
                 // adl Message Actions
                 if (msg.getType().equals("adl")) {
 
-                    ABT_Agent = ABT_Procedures.ABT_AddLink(ABT_Agent, msg);
+                    ABT_Agent = ABT_Procedures.ABT_AddLink(ABT_Agent, msg, msgSender);
                 }
+            }
+
+            if (msgReceived.getPerformative() == ACLMessage.PROPOSE) {
+
+                // ok? Message Actions
+                if (msg.getType().equals("ok?")) {
+
+                    // Sets new Control Values
+                    try{
+
+                        Control_Day = msg.getDay();
+                        Control_Event = msg.toEvent();
+                    } catch (Exception e){
+
+                        e.printStackTrace();
+                    }
+
+                    ABT_Agent = ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg, msgSender);
+                }
+            }
+
+            if (msgReceived.getPerformative() == ACLMessage.REJECT_PROPOSAL) {
+
+                // ngd Message Actions
+                if (msg.getType().equals("ngd")) {
+
+                    ABT_Agent = ABT_Procedures.ABT_ResolveConflict(ABT_Agent, msg, msgSender);
+                }
+            }
+
+            if (msgReceived.getPerformative() == ACLMessage.INFORM) {
 
                 // stp Message Action
                 if (msg.getType().equals("stp")) {
@@ -200,12 +183,12 @@ public class ABT_Main extends Agent {
         // Reads arguments
         Object[] args = getArguments();
 
-        if (DEBUG) System.out.println("Before check");
+        if (DEBUG) System.out.println("Before ARGS check");
 
         // If there are arguments its an initiator agent
         if (args != null && args.length > 1) {
 
-            if (DEBUG) System.out.println("After check " + args.length + " " + args[0].toString());
+            if (DEBUG) System.out.println("After ARGS check " + args.length + " " + args[0].toString());
 
             ABT_Message arguments = new ABT_Message((String[]) args);
 
@@ -213,8 +196,16 @@ public class ABT_Main extends Agent {
 
                 try {
 
-                    Control_Event = new Event(arguments.getHour(), arguments.getDescription(), arguments.getIntervenients(), arguments.getPriority());
+                    // Check if there is already an event in the spot selected by the initiator agent
+                    if (!ABT_Agent.getAgentSchedule().getWeekdays().get(arguments.getDay()).getSlots().get(arguments.getHour()).getDescription().isEmpty()) {
+
+                        System.err.println("Found an Event already located in the Initiator Agent! Terminating");
+                        doDelete();
+                    }
+
+                    // Sets Control Event
                     Control_Day = arguments.getDay();
+                    Control_Event = arguments.toEvent();
                 } catch (Exception e) {
 
                     e.printStackTrace();
@@ -231,11 +222,12 @@ public class ABT_Main extends Agent {
                         targetService.setType(arguments.getIntervenients().get(i));
                         targetAgent.addServices(targetService);
 
-                        ACLMessage msg = new ACLMessage(ACLMessage.REQUEST); // REQUEST for 'adl' and 'ok?' messages
+                        ACLMessage msg = new ACLMessage(ACLMessage.PROPOSE); // PROPOSE for 'ok?' messages i. e. initiator in this case
                         try {
 
                             DFAgentDescription[] searchAgent = DFService.search(this, targetAgent); // agent find
 
+                            msg.setConversationId("ABT");
                             msg.addReceiver(searchAgent[0].getName()); // send to agent
                             msg.setContent(arguments.toString());
 

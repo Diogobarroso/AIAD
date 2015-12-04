@@ -9,7 +9,7 @@ public class ABT extends Base {
 
     // Inner Classes
     // Stored Info on AgentView and Nogoods
-    public class Stored {
+    public static class Stored {
 
         // Variables
         private String storedAgent;
@@ -17,11 +17,17 @@ public class ABT extends Base {
         private Event storedEvent;
 
         // Constructors
-        public Stored(){
+        public Stored() {
 
             storedAgent = "";
             storedDay = 0;
             storedEvent = null;
+        }
+
+        public Stored(String storedAgent, int storedDay, Event storedEvent) {
+            this.storedAgent = storedAgent;
+            this.storedDay = storedDay;
+            this.storedEvent = storedEvent;
         }
 
         // Gets
@@ -36,6 +42,7 @@ public class ABT extends Base {
         }
 
         public Event getStoredEvent() {
+
             return storedEvent;
         }
 

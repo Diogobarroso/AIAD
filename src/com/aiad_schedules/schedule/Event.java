@@ -167,7 +167,12 @@ public class Event {
 
             return false;
         }
-        return this.Priority == e.Priority;
 
+        return this.Priority == e.Priority;
+    }
+
+    public boolean isEmpty(){
+
+        return this.Description.equals("null");
     }
 }

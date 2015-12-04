@@ -1,7 +1,8 @@
 package com.aiad_schedules.algorithm.ABT;
 
+import com.aiad_schedules.schedule.Event;
+
 import java.util.ArrayList;
-import java.util.StringJoiner;
 
 // ABT Agent Message Structure Class
 public class ABT_Message {
@@ -128,5 +129,11 @@ public class ABT_Message {
         }
 
         return out;
+    }
+
+    // Creates an Event from the Message
+    public Event toEvent() throws Exception{
+
+        return new Event(getHour(), getDescription(), getIntervenients(), getPriority());
     }
 }
