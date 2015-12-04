@@ -51,6 +51,7 @@ public class ABT_Main extends Agent {
 
             if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
 
+            // Parsing
             String[] msgDecode = msgReceived.getContent().split(Pattern.quote(","));
             String msgSender = msgReceived.getSender().getName().split(Pattern.quote("@"))[0];
 
@@ -89,7 +90,7 @@ public class ABT_Main extends Agent {
                         e.printStackTrace();
                     }
 
-                    ABT_Agent = ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg, msgSender);
+                    ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg, msgSender);
                 }
             }
 
@@ -206,6 +207,9 @@ public class ABT_Main extends Agent {
                     // Sets Control Event
                     Control_Day = arguments.getDay();
                     Control_Event = arguments.toEvent();
+
+                    // Sets Self View
+                    ABT_Agent.setAgentSelf(new ABT.Self(Control_Day, Control_Event));
                 } catch (Exception e) {
 
                     e.printStackTrace();

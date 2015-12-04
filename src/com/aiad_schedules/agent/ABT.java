@@ -63,9 +63,52 @@ public class ABT extends Base {
         }
     }
 
+    // Agent's self view
+    public static class Self {
+
+        // Variables
+        private int selfDay;
+        private Event selfEvent;
+
+        // Constructors
+        public Self() {
+
+            selfDay = -1;
+            selfEvent = null;
+        }
+
+        public Self(int selfDay, Event selfEvent) {
+            this.selfDay = selfDay;
+            this.selfEvent = selfEvent;
+        }
+
+        // Gets
+        public int getSelfDay() {
+
+            return selfDay;
+        }
+
+        public void setSelfDay(int selfDay) {
+
+            this.selfDay = selfDay;
+        }
+
+        // Sets
+        public com.aiad_schedules.schedule.Event getSelfEvent() {
+
+            return selfEvent;
+        }
+
+        public void setSelfEvent(Event selfEvent) {
+
+            this.selfEvent = selfEvent;
+        }
+    }
+
     // Variables
     private ArrayList<Stored> NoGood = new ArrayList<>();
     private ArrayList<Stored> AgentView = new ArrayList<>();
+    private Self AgentSelf = new Self();
 
     // Constructors
     public ABT() {
@@ -84,6 +127,11 @@ public class ABT extends Base {
         return AgentView;
     }
 
+    public Self getAgentSelf() {
+
+        return AgentSelf;
+    }
+
     // Sets
     public void setNoGood(ArrayList<Stored> noGood) {
 
@@ -93,5 +141,10 @@ public class ABT extends Base {
     public void setAgentView(ArrayList<Stored> agentView) {
 
         AgentView = agentView;
+    }
+
+    public void setAgentSelf(Self agentSelf) {
+
+        AgentSelf = agentSelf;
     }
 }

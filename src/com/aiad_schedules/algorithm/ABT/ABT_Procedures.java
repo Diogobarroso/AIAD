@@ -11,20 +11,19 @@ public class ABT_Procedures {
     // Agent View Checker
     public static ABT ABT_CheckAgentView(ABT Agent, ABT_Message msg, String msgSender) throws Exception {
 
-        boolean controlFlag = false;
+        boolean msgFlag = false;
 
         // Checks if Message Agent is present in the View
         for(int i = 0; i < Agent.getAgentView().size(); i++){
 
             if(Agent.getAgentView().get(i).getStoredAgent().equals(msgSender)){
 
-                controlFlag = true;
+                msgFlag = true;
                 break;
             }
         }
-
         // If it ain't present it adds it to the view
-        if(!controlFlag){
+        if(!msgFlag){
 
             Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), new Event(msg.getHour(), msg.getDescription(), msg.getIntervenients(), msg.getPriority())));
         }
@@ -41,6 +40,7 @@ public class ABT_Procedures {
         }
 
         //if(Agent.getAgentSchedule().getWeekdays().get(msg.getDay()).getSlots().get(msg.getHour()).equals()
+        return 0;
     }
 
     public static ABT ABT_ResolveConflict(ABT Agent, ABT_Message msg, String msgSender) {

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="59c18db9-ef34-4997-8126-15e0b7c4328f" name="Default" comment="ABT_Kernel v0.33&#10;-&gt; More Fixes&#10;-&gt; Swapped the message system">
+    <list default="true" id="59c18db9-ef34-4997-8126-15e0b7c4328f" name="Default" comment="ABT_Kernel v0.34&#10;-&gt; New Procedures&#10;-&gt; Agent View Check v1&#10;-&gt; Start of ok? message control">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java" />
     </list>
     <ignored path="AIAD.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+              <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -46,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
+              <caret line="212" column="39" selection-start-line="212" selection-start-column="39" selection-end-line="212" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -57,8 +55,8 @@
       <file leaf-file-name="ABT_Procedures.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6915254">
-              <caret line="42" column="10" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.40338984">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -83,7 +81,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="176" column="5" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="5" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -144,10 +144,10 @@
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Stored.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/Stored.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/agent/Stored.java" />
-        <option value="$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/schedule/Event.java" />
-        <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" />
+        <option value="$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java" />
+        <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" />
         <option value="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java" />
       </list>
     </option>
@@ -195,9 +195,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -231,10 +229,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="aiad_schedules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tests" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -277,52 +271,8 @@
               <option name="myItemId" value="aiad_schedules" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AIAD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AIAD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="aiad_schedules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="input" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AIAD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AIAD" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="aiad_schedules" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="algorithm" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ADOPT" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -390,10 +340,12 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.plugin.settings.project.settings.cfml" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -1024,7 +976,8 @@
       <workItem from="1449065309228" duration="1821000" />
       <workItem from="1449130462432" duration="597000" />
       <workItem from="1449134900813" duration="1372000" />
-      <workItem from="1449216233590" duration="8751000" />
+      <workItem from="1449216233590" duration="8811000" />
+      <workItem from="1449225724346" duration="4310000" />
     </task>
     <task id="LOCAL-00001" summary="Schedule Structure pre-csv reading (no testing done)">
       <created>1444153512532</created>
@@ -1110,11 +1063,17 @@
       <option name="project" value="LOCAL" />
       <updated>1449050382797</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="ABT_Kernel v0.34&#10;-&gt; New Procedures&#10;-&gt; Agent View Check v1&#10;-&gt; Start of ok? message control">
+      <created>1449225048140</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1449225048140</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128502000" />
+    <option name="totallyTimeSpent" value="132872000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -1171,11 +1130,12 @@
     <MESSAGE value="ABT_Kernel v0.31 -&gt; NOT WORKING&#10;-&gt; New NoGood/AgentView Structure" />
     <MESSAGE value="ABT_Kernel v0.32&#10;-&gt; Initial message setup done&#10;-&gt; More Refactor" />
     <MESSAGE value="ABT_Kernel v0.33&#10;-&gt; More Fixes&#10;-&gt; Swapped the message system" />
-    <option name="LAST_COMMIT_MESSAGE" value="ABT_Kernel v0.33&#10;-&gt; More Fixes&#10;-&gt; Swapped the message system" />
+    <MESSAGE value="ABT_Kernel v0.34&#10;-&gt; New Procedures&#10;-&gt; Agent View Check v1&#10;-&gt; Start of ok? message control" />
+    <option name="LAST_COMMIT_MESSAGE" value="ABT_Kernel v0.34&#10;-&gt; New Procedures&#10;-&gt; Agent View Check v1&#10;-&gt; Start of ok? message control" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="5" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1530,7 +1490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.02881356">
           <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1538,7 +1497,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="176" column="5" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="5" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1555,7 +1516,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/agent/ABT.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1565,7 +1526,7 @@
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="21" selection-start-line="89" selection-start-column="21" selection-end-line="89" selection-end-column="21" />
+          <caret line="212" column="39" selection-start-line="212" selection-start-column="39" selection-end-line="212" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1574,8 +1535,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Procedures.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6915254">
-          <caret line="42" column="10" selection-start-line="42" selection-start-column="10" selection-end-line="42" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.40338984">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1585,6 +1546,17 @@
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArquillianSettingsConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
