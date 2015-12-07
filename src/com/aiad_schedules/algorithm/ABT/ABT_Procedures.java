@@ -3,54 +3,119 @@ package com.aiad_schedules.algorithm.ABT;
 import com.aiad_schedules.agent.ABT;
 import com.aiad_schedules.schedule.Event;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
 
-// PROTOTYPE
+// ABT Kernel Procedures
 public class ABT_Procedures {
 
+    final class AgentValue {
+
+        // Variables
+        private Event Event;
+        private ABT Agent;
+
+        // Constructors
+        public AgentValue(Event event, ABT agent) {
+
+            Event = event;
+            Agent = agent;
+        }
+
+        // Sets
+        public Event getEvent() {
+
+            return Event;
+        }
+
+        public ABT getAgent() {
+
+            return Agent;
+        }
+
+        // Sets
+        public void setEvent(Event event) {
+
+            Event = event;
+        }
+
+        public void setAgent(ABT agent) {
+
+            Agent = agent;
+        }
+    }
+
     // Agent View Checker
-    public static ABT ABT_CheckAgentView(ABT Agent, ABT_Message msg, String msgSender) throws Exception {
+    public static ABT CheckAgentView(ABT Agent, ABT_Message msg, String msgSender) throws Exception {
 
-        boolean msgFlag = false;
+        if (ABT_Functions.Consistent(Agent.getAgentSelf(), Agent.getAgentView())) {
 
-        // Checks if Message Agent is present in the View
-        for(int i = 0; i < Agent.getAgentView().size(); i++){
 
-            if(Agent.getAgentView().get(i).getStoredAgent().equals(msgSender)){
+        }
 
-                msgFlag = true;
-                break;
+        return Agent;
+    }
+
+    // ProcessInfo Method for "ok?" messages
+    public static short ProcessInfo(ABT Agent, ABT_Message msg, String msgSender) throws Exception {
+
+        Event controlEvent = new Event(msg.getHour(), msg.getDescription(), msg.getIntervenients(), msg.getPriority());
+
+        // Adds message to the view
+        Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
+
+        // Sets the agent self view
+        Agent.setAgentSelf(new ABT.Self(msg.getDay(), Agent.getAgentSchedule().getWeekdays().get(msg.getDay()).getSlots().get(msg.getHour() - 8)));
+
+        // Checks if the current description is equal to what he wants to assign
+        if (Agent.getAgentSelf().getSelfEvent().getDescription().equals("null")) {
+
+            return 0; // In case it is valid
+        } else if (Agent.getAgentSelf().getSelfEvent().equals(controlEvent)) {
+
+            return 1; // In case it is already assigned with this value
+        } else {
+
+            return 2; // In case of another assigned Value
+        }
+    }
+
+    // ResolveConflict method for "nogood" messages
+    public static ABT ResolveConflict(ABT Agent, ABT_Message msg, String msgSender) {
+
+
+        return Agent;
+    }
+
+    // If it receives a link it is and accepted message
+    public static ABT AddLink(ABT Agent, ABT_Message msg, String msgSender) throws Exception {
+
+        Event controlEvent = new Event(msg.getHour(), msg.getDescription(), msg.getIntervenients(), msg.getPriority());
+
+        // Adds message to the view
+        Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
+
+        // Removes Inconsistent Values from NoGood Store (All assigned Values)
+        int i = 0;
+        while (i < Agent.getNoGood().size()) {
+
+            if (Agent.getNoGood().get(i).getStoredAgent().equals(msgSender)) {
+
+                Agent.getNoGood().remove(i);
+            } else {
+
+                i++;
             }
         }
-        // If it ain't present it adds it to the view
-        if(!msgFlag){
-
-            Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), new Event(msg.getHour(), msg.getDescription(), msg.getIntervenients(), msg.getPriority())));
-        }
-
-        // TODO: Consistency!!
-        return Agent;
-    }
-
-    public static short ABT_ProcessInfo(ABT Agent, ABT_Message msg, String msgSender) {
-
-        if(Agent.getAgentSchedule().getWeekdays().get(msg.getDay()).getSlots().get(msg.getHour()).isEmpty()){
-
-            return 1;
-        }
-
-        //if(Agent.getAgentSchedule().getWeekdays().get(msg.getDay()).getSlots().get(msg.getHour()).equals()
-        return 0;
-    }
-
-    public static ABT ABT_ResolveConflict(ABT Agent, ABT_Message msg, String msgSender) {
-
 
         return Agent;
     }
 
-    public static ABT ABT_AddLink(ABT Agent, ABT_Message msg, String msgSender) {
+    // Assigns Finished Values to the Agent
+    public static ABT ChangeValues(ABT Agent) {
 
+        Agent.getAgentSchedule().getWeekdays().get(Agent.getAgentSelf().getSelfDay()).getSlots().get(Agent.getAgentSelf().getSelfEvent().getHour() - 8).setDescription(Agent.getAgentSelf().getSelfEvent().getDescription());
+        Agent.getAgentSchedule().getWeekdays().get(Agent.getAgentSelf().getSelfDay()).getSlots().get(Agent.getAgentSelf().getSelfEvent().getHour() - 8).setPriority(Agent.getAgentSelf().getSelfEvent().getPriority());
+        Agent.getAgentSchedule().getWeekdays().get(Agent.getAgentSelf().getSelfDay()).getSlots().get(Agent.getAgentSelf().getSelfEvent().getHour() - 8).setIntervenients(Agent.getAgentSelf().getSelfEvent().getIntervenients());
 
         return Agent;
     }

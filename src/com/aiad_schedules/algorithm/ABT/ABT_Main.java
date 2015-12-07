@@ -60,18 +60,19 @@ public class ABT_Main extends Agent {
             // Check values with Agent View
             try {
 
-                ABT_Agent = ABT_Procedures.ABT_CheckAgentView(ABT_Agent, msg, msgSender);
+                ABT_Agent = ABT_Procedures.CheckAgentView(ABT_Agent, msg, msgSender);
             } catch (Exception e) {
 
                 e.printStackTrace();
             }
+
             // Processes the Message
             if (msgReceived.getPerformative() == ACLMessage.REQUEST) {
 
                 // adl Message Actions
                 if (msg.getType().equals("adl")) {
 
-                    ABT_Agent = ABT_Procedures.ABT_AddLink(ABT_Agent, msg, msgSender);
+                    ABT_Agent = ABT_Procedures.AddLink(ABT_Agent, msg, msgSender);
                 }
             }
 
@@ -85,12 +86,13 @@ public class ABT_Main extends Agent {
 
                         Control_Day = msg.getDay();
                         Control_Event = msg.toEvent();
+
+                        ABT_Procedures.ProcessInfo(ABT_Agent, msg, msgSender);
                     } catch (Exception e){
 
                         e.printStackTrace();
                     }
 
-                    ABT_Procedures.ABT_ProcessInfo(ABT_Agent, msg, msgSender);
                 }
             }
 
@@ -99,7 +101,7 @@ public class ABT_Main extends Agent {
                 // ngd Message Actions
                 if (msg.getType().equals("ngd")) {
 
-                    ABT_Agent = ABT_Procedures.ABT_ResolveConflict(ABT_Agent, msg, msgSender);
+                    ABT_Agent = ABT_Procedures.ResolveConflict(ABT_Agent, msg, msgSender);
                 }
             }
 
