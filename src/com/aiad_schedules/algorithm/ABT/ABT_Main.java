@@ -29,7 +29,6 @@ public class ABT_Main extends Agent {
     private Event Control_Event = null;
 
     // Internal Behaviour Classes
-
     // ABT Kernel Behaviour Class
     class ABT_Kernel extends SimpleBehaviour {
 
@@ -47,7 +46,7 @@ public class ABT_Main extends Agent {
 
             // Receives a Message
             MessageTemplate msgTemplate = MessageTemplate.MatchConversationId("ABT");
-            ACLMessage msgReceived = receive(msgTemplate);
+            ACLMessage msgReceived = blockingReceive(msgTemplate);
 
             if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
 
@@ -57,6 +56,7 @@ public class ABT_Main extends Agent {
 
             ABT_Message msg = new ABT_Message(msgDecode);
 
+            /*
             // Check values with Agent View
             try {
 
@@ -65,14 +65,22 @@ public class ABT_Main extends Agent {
 
                 e.printStackTrace();
             }
+            */
 
             // Processes the Message
-            if (msgReceived.getPerformative() == ACLMessage.REQUEST) {
+            if (msgReceived.getPerformative() == ACLMessage.INFORM) {
 
                 // adl Message Actions
                 if (msg.getType().equals("adl")) {
 
-                    ABT_Agent = ABT_Procedures.AddLink(ABT_Agent, msg, msgSender);
+                    try {
+
+                        ABT_Agent = ABT_Procedures.AddLink(ABT_Agent, msg, msgSender);
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
+
                 }
             }
 
@@ -82,17 +90,34 @@ public class ABT_Main extends Agent {
                 if (msg.getType().equals("ok?")) {
 
                     // Sets new Control Values
-                    try{
+                    try {
 
                         Control_Day = msg.getDay();
                         Control_Event = msg.toEvent();
 
-                        ABT_Procedures.ProcessInfo(ABT_Agent, msg, msgSender);
-                    } catch (Exception e){
+                        ABT_Message response;
+
+                        switch(ABT_Procedures.ProcessInfo(ABT_Agent, msg, msgSender)){
+
+                            case 0: // Valid
+                                response = new ABT_Message("adl", msg.getDescription(), msg.getPriority(), msg.getDay(), msg.getHour(), msg.getIntervenients());
+                                sendMessage(response, msgSender, 2);
+                                break;
+                            case 1: // Already Assigned
+                                break;
+                            case 2: // Another Assigned Value
+                                response = new ABT_Message("ngd", msg.getDescription(), msg.getPriority(), msg.getDay(), msg.getHour(), msg.getIntervenients());
+                                sendMessage(response, msgSender, 2);
+                                break;
+                            default:
+                                System.err.println("Error Encountered Processing Info!!");
+                                doDelete();
+                                end = true;
+                        }
+                    } catch (Exception e) {
 
                         e.printStackTrace();
                     }
-
                 }
             }
 
@@ -120,6 +145,47 @@ public class ABT_Main extends Agent {
         public boolean done() {
 
             return end;
+        }
+    }
+
+    // Message Creation Function
+    private void sendMessage(ABT_Message msg, String msgReceiver, int type){
+
+        DFAgentDescription targetAgent = new DFAgentDescription();
+        ServiceDescription targetService = new ServiceDescription();
+        targetService.setType(msgReceiver);
+        targetAgent.addServices(targetService);
+
+        ACLMessage msgToSend = null;
+
+        switch(type){
+
+            case 0:
+                msgToSend = new ACLMessage((ACLMessage.PROPOSE));
+                break;
+            case 1:
+                msgToSend = new ACLMessage((ACLMessage.REJECT_PROPOSAL));
+                break;
+            case 2:
+                msgToSend = new ACLMessage((ACLMessage.INFORM));
+                break;
+            case 3:
+                msgToSend = new ACLMessage(ACLMessage.PROPAGATE);
+                break;
+        }
+        try {
+
+            DFAgentDescription[] searchAgent = DFService.search(this, targetAgent); // agent find
+
+            msgToSend.setConversationId("ABT");
+            msgToSend.addReceiver(searchAgent[0].getName()); // send to agent
+            msgToSend.setContent(msg.toString());
+
+            send(msgToSend);
+        } catch (FIPAException | NullPointerException e) {
+
+            doDelete();
+            e.printStackTrace();
         }
     }
 
@@ -223,26 +289,7 @@ public class ABT_Main extends Agent {
                     // Only in case the intervenient is not itself
                     if (!arguments.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
 
-                        DFAgentDescription targetAgent = new DFAgentDescription();
-                        ServiceDescription targetService = new ServiceDescription();
-                        targetService.setType(arguments.getIntervenients().get(i));
-                        targetAgent.addServices(targetService);
-
-                        ACLMessage msg = new ACLMessage(ACLMessage.PROPOSE); // PROPOSE for 'ok?' messages i. e. initiator in this case
-                        try {
-
-                            DFAgentDescription[] searchAgent = DFService.search(this, targetAgent); // agent find
-
-                            msg.setConversationId("ABT");
-                            msg.addReceiver(searchAgent[0].getName()); // send to agent
-                            msg.setContent(arguments.toString());
-
-                            send(msg);
-                        } catch (FIPAException e) {
-
-                            doDelete();
-                            e.printStackTrace();
-                        }
+                        sendMessage(arguments, arguments.getIntervenients().get(i), 1);
                     }
                 }
             }

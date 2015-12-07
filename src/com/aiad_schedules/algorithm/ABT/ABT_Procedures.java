@@ -3,11 +3,10 @@ package com.aiad_schedules.algorithm.ABT;
 import com.aiad_schedules.agent.ABT;
 import com.aiad_schedules.schedule.Event;
 
-import java.util.ArrayList;
-
 // ABT Kernel Procedures
 public class ABT_Procedures {
 
+    // TODO: REVIEW!!!
     final class AgentValue {
 
         // Variables
@@ -45,14 +44,9 @@ public class ABT_Procedures {
     }
 
     // Agent View Checker
-    public static ABT CheckAgentView(ABT Agent, ABT_Message msg, String msgSender) throws Exception {
+    public static boolean CheckAgentView(ABT Agent) throws Exception {
 
-        if (ABT_Functions.Consistent(Agent.getAgentSelf(), Agent.getAgentView())) {
-
-
-        }
-
-        return Agent;
+        return ABT_Functions.Consistent(Agent.getAgentSelf(), Agent.getAgentView());
     }
 
     // ProcessInfo Method for "ok?" messages
@@ -61,7 +55,7 @@ public class ABT_Procedures {
         Event controlEvent = new Event(msg.getHour(), msg.getDescription(), msg.getIntervenients(), msg.getPriority());
 
         // Adds message to the view
-        Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
+        Agent = ABT_Functions.addAgentView(Agent, msg, msgSender, controlEvent);
 
         // Sets the agent self view
         Agent.setAgentSelf(new ABT.Self(msg.getDay(), Agent.getAgentSchedule().getWeekdays().get(msg.getDay()).getSlots().get(msg.getHour() - 8)));
@@ -83,16 +77,17 @@ public class ABT_Procedures {
     public static ABT ResolveConflict(ABT Agent, ABT_Message msg, String msgSender) {
 
 
+
         return Agent;
     }
 
-    // If it receives a link it is and accepted message
+    // If it receives a link if it is an accepted message
     public static ABT AddLink(ABT Agent, ABT_Message msg, String msgSender) throws Exception {
 
         Event controlEvent = new Event(msg.getHour(), msg.getDescription(), msg.getIntervenients(), msg.getPriority());
 
         // Adds message to the view
-        Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
+        Agent = ABT_Functions.addAgentView(Agent, msg, msgSender, controlEvent);
 
         // Removes Inconsistent Values from NoGood Store (All assigned Values)
         int i = 0;

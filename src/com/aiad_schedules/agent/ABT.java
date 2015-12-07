@@ -147,4 +147,18 @@ public class ABT extends Base {
 
         AgentSelf = agentSelf;
     }
+
+    // Functions
+    public int findAgentView(ArrayList<ABT.Stored> view, String agent){
+
+        for(int i = 0; i < view.size(); i++){
+
+            if(view.get(i).getStoredAgent().equals(agent)) {
+
+                return i;
+            }
+        }
+
+        return 0;
+    }
 }
