@@ -26,6 +26,15 @@ public class ABT_Message {
         this.intervenients = intervenients;
     }
 
+    public ABT_Message(String type) {
+
+        this.type = type;
+        this.description = "";
+        this.priority = 0;
+        this.day = 0;
+        this.hour = 0;
+    }
+
     public ABT_Message(String type, String description, int priority, int day, int hour) {
 
         this.type = type;

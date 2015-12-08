@@ -27,6 +27,7 @@ public class ABT_Main extends Agent {
     private ABT ABT_Agent = new ABT();
     private int Control_Day = -1;
     private Event Control_Event = null;
+    private int Control_Intervenients = 0;
 
     // Internal Behaviour Classes
     // ABT Kernel Behaviour Class
@@ -56,19 +57,8 @@ public class ABT_Main extends Agent {
 
             ABT_Message msg = new ABT_Message(msgDecode);
 
-            /*
-            // Check values with Agent View
-            try {
-
-                ABT_Agent = ABT_Procedures.CheckAgentView(ABT_Agent, msg, msgSender);
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-            */
-
             // Processes the Message
-            if (msgReceived.getPerformative() == ACLMessage.INFORM) {
+            if (msgReceived.getPerformative() == ACLMessage.ACCEPT_PROPOSAL) {
 
                 // adl Message Actions
                 if (msg.getType().equals("adl")) {
@@ -76,11 +66,25 @@ public class ABT_Main extends Agent {
                     try {
 
                         ABT_Agent = ABT_Procedures.AddLink(ABT_Agent, msg, msgSender);
+
+                        // Verifies if all values are consistent with the view
+                        if(Control_Intervenients == ABT_Agent.getAgentView().size()){
+
+                            if(ABT_Procedures.CheckAgentView(ABT_Agent)){
+
+                                ABT_Message response;
+                                // Send terminate Message
+                                for(int i = 0; i < ABT_Agent.getAgentView().size(); i++){
+
+                                    response = new ABT_Message("done");
+                                    sendMessage(response, msgSender, 2);
+                                }
+                            }
+                        }
                     } catch (Exception e) {
 
                         e.printStackTrace();
                     }
-
                 }
             }
 
@@ -107,7 +111,7 @@ public class ABT_Main extends Agent {
                                 break;
                             case 2: // Another Assigned Value
                                 response = new ABT_Message("ngd", msg.getDescription(), msg.getPriority(), msg.getDay(), msg.getHour(), msg.getIntervenients());
-                                sendMessage(response, msgSender, 2);
+                                sendMessage(response, msgSender, 1);
                                 break;
                             default:
                                 System.err.println("Error Encountered Processing Info!!");
@@ -130,13 +134,22 @@ public class ABT_Main extends Agent {
                 }
             }
 
-            if (msgReceived.getPerformative() == ACLMessage.INFORM) {
+            if (msgReceived.getPerformative() == ACLMessage.FAILURE) {
 
                 // stp Message Action
                 if (msg.getType().equals("stp")) {
 
                     // Terminates the Agent
                     end = true;
+                }
+            }
+
+            if (msgReceived.getPerformative() == ACLMessage.INFORM) {
+
+                // done Message Action
+                if (msg.getType().equals("done")) {
+
+                    ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
                 }
             }
         }
@@ -167,11 +180,13 @@ public class ABT_Main extends Agent {
                 msgToSend = new ACLMessage((ACLMessage.REJECT_PROPOSAL));
                 break;
             case 2:
-                msgToSend = new ACLMessage((ACLMessage.INFORM));
+                msgToSend = new ACLMessage((ACLMessage.ACCEPT_PROPOSAL));
                 break;
             case 3:
-                msgToSend = new ACLMessage(ACLMessage.PROPAGATE);
+                msgToSend = new ACLMessage(ACLMessage.INFORM);
                 break;
+            case 4:
+                msgToSend = new ACLMessage(ACLMessage.FAILURE);
         }
         try {
 
@@ -275,6 +290,7 @@ public class ABT_Main extends Agent {
                     // Sets Control Event
                     Control_Day = arguments.getDay();
                     Control_Event = arguments.toEvent();
+                    Control_Intervenients =  arguments.getIntervenients().size();
 
                     // Sets Self View
                     ABT_Agent.setAgentSelf(new ABT.Self(Control_Day, Control_Event));
@@ -289,7 +305,7 @@ public class ABT_Main extends Agent {
                     // Only in case the intervenient is not itself
                     if (!arguments.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
 
-                        sendMessage(arguments, arguments.getIntervenients().get(i), 1);
+                        sendMessage(arguments, arguments.getIntervenients().get(i), 0);
                     }
                 }
             }
