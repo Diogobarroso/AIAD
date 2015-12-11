@@ -65,11 +65,14 @@ public class ABT_Main extends Agent {
 
                         ABT_Agent = ABT_Procedures.AddLink(ABT_Agent, msg, msgSender);
 
-
-                        if (DEBUG) System.out.println("Control intervinients: " + Control_Intervenients);
+                        if (DEBUG) System.err.println("Control intervinients: " + Control_Intervenients);
+                        if (DEBUG) System.err.println("My view size: " + ABT_Agent.getAgentView().size());
+                        if (DEBUG) System.err.println("Message from: " + msgSender);
 
                         // Verifies if all values are consistent with the view
                         if (Control_Intervenients == ABT_Agent.getAgentView().size()) {
+
+                            if (DEBUG) System.err.println("I am conistent!");
 
                             if (ABT_Procedures.CheckAgentView(ABT_Agent)) {
 
@@ -112,7 +115,7 @@ public class ABT_Main extends Agent {
                             case 1: // Already Assigned
                                 break;
                             case 2: // Another Assigned Value
-                                response = new ABT_Message("ngd", msg.getDay(), msg.getHour());
+                                response = new ABT_Message("ngd", ABT_Agent.getAgentSelf().getSelfEvent().getDescription(), ABT_Agent.getAgentSelf().getSelfEvent().getPriority(), ABT_Agent.getAgentSelf().getSelfDay(), ABT_Agent.getAgentSelf().getSelfEvent().getHour(), ABT_Agent.getAgentSelf().getSelfEvent().getIntervenients());
                                 sendMessage(response, msgSender, 1);
                                 break;
                             default:

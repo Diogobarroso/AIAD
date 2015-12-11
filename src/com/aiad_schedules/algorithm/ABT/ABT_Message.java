@@ -44,8 +44,6 @@ public class ABT_Message {
         this.hour = hour;
     }
 
-
-
     public ABT_Message(String type, int day, int hour) {
 
         this.hour = hour;

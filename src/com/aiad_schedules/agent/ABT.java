@@ -203,6 +203,6 @@ public class ABT extends Base {
             }
         }
 
-        return 0;
+        return -1;
     }
 }

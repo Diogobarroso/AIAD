@@ -8,6 +8,10 @@ import java.util.ArrayList;
 // ABT Kernel Functions
 public class ABT_Functions {
 
+    // ### ACTIVATE FOR TXT DEBUG ###
+    static protected boolean DEBUG = true;
+    // ### ACTIVATE FOR TXT DEBUG ###
+
     // Checks if the AgentView and AgentSelf is Consistent
     public static boolean Consistent(ABT.Self self, ArrayList<ABT.Stored> view) {
 
@@ -38,9 +42,16 @@ public class ABT_Functions {
         } else {
 
             int find = Agent.findAgentView(Agent.getAgentView(), msgSender);
-            Agent.getAgentView().get(find).setStoredAgent(msgSender);
-            Agent.getAgentView().get(find).setStoredDay(msg.getDay());
-            Agent.getAgentView().get(find).setStoredEvent(controlEvent);
+            if (find != -1) {
+
+                Agent.getAgentView().get(find).setStoredAgent(msgSender);
+                Agent.getAgentView().get(find).setStoredDay(msg.getDay());
+                Agent.getAgentView().get(find).setStoredEvent(controlEvent);
+            }
+            else{
+
+                Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
+            }
         }
 
         return Agent;
@@ -62,26 +73,32 @@ public class ABT_Functions {
         int chosenDay = Agent.getAgentSelf().getSelfDay();
         int currentDay = 0;
 
+        if (DEBUG) System.err.println("CHOICE --- Choosing Value for " + Agent.getAgentName());
+
         do {
 
             if (set) {
 
+                if (DEBUG) System.err.println("CHOICE --- set equal");
                 currentDay = chosenDay;
             }
 
             if (!(!set && currentDay == chosenDay)) {
+
+                if (DEBUG) System.err.println("CHOICE --- in choice cycle");
                 for (int i = 0; i < Agent.getAgentSchedule().getWeekdays().get(currentDay).getSlots().size(); i++) {
 
                     // In-case this value is empty on initiator agent
                     if (Agent.getAgentSchedule().getWeekdays().get(currentDay).getSlots().get(i).isEmpty()) {
-
+                        if (DEBUG) System.err.println("CHOICE --- found empty");
                         // Checks NoGood
-                        for (int j = 0; i < Agent.getNoGood().size(); j++) {
+                        for (int j = 0; j < Agent.getNoGood().size(); j++) {
 
-                            // If it is not in the view it will assign
-                            if (!Agent.getNoGood().get(j).hasConflict(currentDay, i)) {
-
-                                Event newSelfEvent = new Event(i, Agent.getAgentSelf().getSelfEvent().getDescription(), Agent.getAgentSelf().getSelfEvent().getIntervenients(), Agent.getAgentSelf().getSelfEvent().getPriority());
+                            // If it is not in the nogood it will assign
+                            if (!Agent.getNoGood().get(j).hasConflict(currentDay, i + 8)) {
+                                if (DEBUG) System.err.println("CHOICE --- i am not on view");
+                                if (DEBUG) System.err.println("CHOICE --- i value " + i);
+                                Event newSelfEvent = new Event(i + 8, Agent.getAgentSelf().getSelfEvent().getDescription(), Agent.getAgentSelf().getSelfEvent().getIntervenients(), Agent.getAgentSelf().getSelfEvent().getPriority());
                                 return new ABT.Self(currentDay, newSelfEvent);
                             }
                         }
@@ -98,6 +115,7 @@ public class ABT_Functions {
                 currentDay++;
             }
         } while (currentDay < 5);
+
         return null;
     }
 }
