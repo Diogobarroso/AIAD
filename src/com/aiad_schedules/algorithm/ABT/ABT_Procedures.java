@@ -6,6 +6,10 @@ import com.aiad_schedules.schedule.Event;
 // ABT Kernel Procedures
 public class ABT_Procedures {
 
+    // ### ACTIVATE FOR TXT DEBUG ###
+    static protected boolean DEBUG = true;
+    // ### ACTIVATE FOR TXT DEBUG ###
+
     // TODO: REVIEW!!!
     final class AgentValue {
 
@@ -59,6 +63,8 @@ public class ABT_Procedures {
 
         // Sets the agent self view
         Agent.setAgentSelf(new ABT.Self(msg.getDay(), Agent.getAgentSchedule().getWeekdays().get(msg.getDay()).getSlots().get(msg.getHour() - 8)));
+
+        if(DEBUG) System.err.println("Agent self info: " + Agent.getAgentSelf().getSelfEvent().toString());
 
         // Checks if the current description is equal to what he wants to assign
         if (Agent.getAgentSelf().getSelfEvent().getDescription().equals("null")) {

@@ -10,7 +10,6 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -19,7 +18,7 @@ import java.util.regex.Pattern;
 public class ABT_Main extends Agent {
 
     // ### ACTIVATE FOR TXT DEBUG ###
-    static public boolean DEBUG = true;
+    static protected boolean DEBUG = true;
     // ### ACTIVATE FOR TXT DEBUG ###
 
     // Variables
@@ -46,8 +45,7 @@ public class ABT_Main extends Agent {
         public void action() {
 
             // Receives a Message
-            MessageTemplate msgTemplate = MessageTemplate.MatchConversationId("ABT");
-            ACLMessage msgReceived = blockingReceive(msgTemplate);
+            ACLMessage msgReceived = blockingReceive();
 
             if (DEBUG) System.out.println(getLocalName() + ": recebi " + msgReceived.getContent());
 
@@ -66,6 +64,9 @@ public class ABT_Main extends Agent {
                     try {
 
                         ABT_Agent = ABT_Procedures.AddLink(ABT_Agent, msg, msgSender);
+
+
+                        if (DEBUG) System.out.println("Control intervinients: " + Control_Intervenients);
 
                         // Verifies if all values are consistent with the view
                         if(Control_Intervenients == ABT_Agent.getAgentView().size()){
@@ -193,7 +194,6 @@ public class ABT_Main extends Agent {
 
             DFAgentDescription[] searchAgent = DFService.search(this, targetAgent); // agent find
 
-            msgToSend.setConversationId("ABT");
             msgToSend.addReceiver(searchAgent[0].getName()); // send to agent
             msgToSend.setContent(msg.toString());
 
@@ -282,10 +282,11 @@ public class ABT_Main extends Agent {
                 try {
 
                     // Check if there is already an event in the spot selected by the initiator agent
-                    if (!ABT_Agent.getAgentSchedule().getWeekdays().get(arguments.getDay()).getSlots().get(arguments.getHour()).getDescription().isEmpty()) {
+                    if (!ABT_Agent.getAgentSchedule().getWeekdays().get(arguments.getDay()).getSlots().get(arguments.getHour()).isEmpty()) {
 
                         System.err.println("Found an Event already located in the Initiator Agent! Terminating");
                         doDelete();
+                        endService = true;
                     }
 
                     // Sets Control Event
