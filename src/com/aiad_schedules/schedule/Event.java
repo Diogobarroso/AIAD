@@ -83,11 +83,10 @@ public class Event {
             throw new InvalidObjectException(Error);
         }
 
-        if (description.equals("null")){
+        if (description.equals("null")) {
 
             Description = "";
-        }
-        else {
+        } else {
 
             Description = description;
         }
@@ -138,10 +137,42 @@ public class Event {
     }
 
     // Functions
+    @Override
     public String toString() {
 
         return getHour() + " - Description: " + getDescription()
                 + " - Intervenients: " + getIntervenients().toString()
                 + " - " + "Priority: " + getPriority();
+    }
+
+    public static ArrayList<String> setArrayList(String[] in) {
+
+        ArrayList<String> out = new ArrayList<>();
+
+        for (int i = 0; i < in.length; i++) {
+
+            out.add(in[i]);
+        }
+
+        return out;
+    }
+
+    public boolean equals(Event e) {
+
+        if (this.Hour != e.Hour) {
+
+            return false;
+        }
+        if (!(this.Description.equals(e.Description))){
+
+            return false;
+        }
+
+        return this.Priority == e.Priority;
+    }
+
+    public boolean isEmpty(){
+
+        return this.Description.equals("null");
     }
 }

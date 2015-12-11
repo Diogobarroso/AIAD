@@ -13,9 +13,9 @@ public class Schedule {
     private ArrayList<Day> Weekdays = new ArrayList<>();
 
     // Constructors
-    public Schedule() throws InvalidObjectException{
+    public Schedule() throws InvalidObjectException {
 
-        for(short i = 0; i < TotalDays; i++){
+        for (short i = 0; i < TotalDays; i++) {
 
             Weekdays.add(new Day());
         }
@@ -34,13 +34,13 @@ public class Schedule {
     }
 
     // Functions
-    public String toString(){
+    public String toString() {
 
         String out = "";
 
-        for(short i = 0; i < getWeekdays().size(); i++){
+        for (short i = 0; i < getWeekdays().size(); i++) {
 
-            switch(i){
+            switch (i) {
 
                 case 0:
                     out += "Monday: \n";

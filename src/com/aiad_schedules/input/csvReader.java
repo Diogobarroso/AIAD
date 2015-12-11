@@ -25,8 +25,7 @@ public class csvReader {
                 String Error = "Invalid File! Must be a \".csv\" file!";
                 throw new IOException(Error);
             }
-        }
-        else{
+        } else {
 
             String Error = "Invalid File! Must be a \".csv\" file!";
             throw new IOException(Error);
