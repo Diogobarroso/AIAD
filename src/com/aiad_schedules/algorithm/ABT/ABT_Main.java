@@ -112,7 +112,7 @@ public class ABT_Main extends Agent {
                             case 1: // Already Assigned
                                 break;
                             case 2: // Another Assigned Value
-                                response = new ABT_Message("ngd", msg.getDescription(), msg.getPriority(), msg.getDay(), msg.getHour(), msg.getIntervenients());
+                                response = new ABT_Message("ngd", msg.getDay(), msg.getHour());
                                 sendMessage(response, msgSender, 1);
                                 break;
                             default:
@@ -134,7 +134,45 @@ public class ABT_Main extends Agent {
 
                     try {
 
+                        ABT_Message response;
+
+                        // Resolves the conflict
                         ABT_Agent = ABT_Procedures.ResolveConflict(ABT_Agent, msg, msgSender);
+
+                        // In case a new value is set
+                        if (ABT_Agent.getAgentSelf() != null) {
+
+                            Control_Day = ABT_Agent.getAgentSelf().getSelfDay();
+                            Control_Event = ABT_Agent.getAgentSelf().getSelfEvent();
+                            Control_Intervenients = ABT_Agent.getAgentSelf().getSelfEvent().getIntervenients().size() - 1;
+
+                            //String type, String description, int priority, int day, int hour, ArrayList<String> intervenients
+                            response = new ABT_Message("ok?", ABT_Agent.getAgentSelf().getSelfEvent().getDescription(), ABT_Agent.getAgentSelf().getSelfEvent().getPriority(), ABT_Agent.getAgentSelf().getSelfDay(), ABT_Agent.getAgentSelf().getSelfEvent().getHour(), ABT_Agent.getAgentSelf().getSelfEvent().getIntervenients());
+
+                            // Runs for every intervenient
+                            for (int i = 0; i < response.getIntervenients().size(); i++) {
+
+                                // Only in case the intervenient is not itself
+                                if (!response.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
+
+                                    sendMessage(response, response.getIntervenients().get(i), 0); //restarts the procedure
+                                }
+                            }
+                        } // In case it is null (no solution)
+                        else {
+
+                            response = new ABT_Message("stp");
+
+                            // Runs for every intervenient
+                            for (int i = 0; i < Control_Event.getIntervenients().size(); i++) {
+
+                                // Only in case the intervenient is not itself
+                                if (!Control_Event.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
+
+                                    sendMessage(response, response.getIntervenients().get(i), 4); // sends fail message
+                                }
+                            }
+                        }
                     } catch (Exception e) {
 
                         e.printStackTrace();

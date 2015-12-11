@@ -44,6 +44,17 @@ public class ABT_Message {
         this.hour = hour;
     }
 
+
+
+    public ABT_Message(String type, int day, int hour) {
+
+        this.hour = hour;
+        this.day = day;
+        this.type = type;
+        this.description = "";
+        this.priority = 0;
+    }
+
     public ABT_Message(String[] msg) {
 
         this.type = msg[0];
