@@ -69,13 +69,13 @@ public class ABT_Main extends Agent {
                         if (DEBUG) System.out.println("Control intervinients: " + Control_Intervenients);
 
                         // Verifies if all values are consistent with the view
-                        if(Control_Intervenients == ABT_Agent.getAgentView().size()){
+                        if (Control_Intervenients - 1 == ABT_Agent.getAgentView().size()) {
 
-                            if(ABT_Procedures.CheckAgentView(ABT_Agent)){
+                            if (ABT_Procedures.CheckAgentView(ABT_Agent)) {
 
                                 ABT_Message response;
                                 // Send terminate Message
-                                for(int i = 0; i < ABT_Agent.getAgentView().size(); i++){
+                                for (int i = 0; i < ABT_Agent.getAgentView().size(); i++) {
 
                                     response = new ABT_Message("done");
                                     sendMessage(response, msgSender, 2);
@@ -102,7 +102,7 @@ public class ABT_Main extends Agent {
 
                         ABT_Message response;
 
-                        switch(ABT_Procedures.ProcessInfo(ABT_Agent, msg, msgSender)){
+                        switch (ABT_Procedures.ProcessInfo(ABT_Agent, msg, msgSender)) {
 
                             case 0: // Valid
                                 response = new ABT_Message("adl", msg.getDescription(), msg.getPriority(), msg.getDay(), msg.getHour(), msg.getIntervenients());
@@ -130,7 +130,7 @@ public class ABT_Main extends Agent {
 
                 // ngd Message Actions
                 if (msg.getType().equals("ngd")) {
-                    
+
                     ABT_Agent = ABT_Procedures.ResolveConflict(ABT_Agent, msg, msgSender);
                 }
             }
@@ -163,7 +163,7 @@ public class ABT_Main extends Agent {
     }
 
     // Message Creation Function
-    private void sendMessage(ABT_Message msg, String msgReceiver, int type){
+    private void sendMessage(ABT_Message msg, String msgReceiver, int type) {
 
         DFAgentDescription targetAgent = new DFAgentDescription();
         ServiceDescription targetService = new ServiceDescription();
@@ -172,7 +172,7 @@ public class ABT_Main extends Agent {
 
         ACLMessage msgToSend = null;
 
-        switch(type){
+        switch (type) {
 
             case 0:
                 msgToSend = new ACLMessage((ACLMessage.PROPOSE));
@@ -292,7 +292,7 @@ public class ABT_Main extends Agent {
                     // Sets Control Event
                     Control_Day = arguments.getDay();
                     Control_Event = arguments.toEvent();
-                    Control_Intervenients =  arguments.getIntervenients().size();
+                    Control_Intervenients = arguments.getIntervenients().size();
 
                     // Sets Self View
                     ABT_Agent.setAgentSelf(new ABT.Self(Control_Day, Control_Event));
