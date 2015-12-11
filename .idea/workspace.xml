@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="59c18db9-ef34-4997-8126-15e0b7c4328f" name="Default" comment="ABT_Kernel v0.4&#10;-&gt; adl and ok procedures">
+    <list default="true" id="59c18db9-ef34-4997-8126-15e0b7c4328f" name="Default" comment="ABT_Kernel v0.41&#10; -&gt; finish adl and done&#10; -&gt; todo ngd">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" afterPath="$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Message.java" />
     </list>
     <ignored path="AIAD.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,8 +41,8 @@
       <file leaf-file-name="ABT_Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.4457626">
-              <caret line="60" column="78" selection-start-line="60" selection-start-column="78" selection-end-line="60" selection-end-column="78" />
+            <state vertical-scroll-proportion="0.76949155">
+              <caret line="189" column="22" selection-start-line="189" selection-start-column="22" selection-end-line="189" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -999,7 +998,7 @@
       <workItem from="1449134900813" duration="1372000" />
       <workItem from="1449216233590" duration="8811000" />
       <workItem from="1449225724346" duration="18130000" />
-      <workItem from="1449475541696" duration="23633000" />
+      <workItem from="1449475541696" duration="31147000" />
     </task>
     <task id="LOCAL-00001" summary="Schedule Structure pre-csv reading (no testing done)">
       <created>1444153512532</created>
@@ -1109,11 +1108,17 @@
       <option name="project" value="LOCAL" />
       <updated>1449529928770</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="ABT_Kernel v0.41&#10; -&gt; finish adl and done&#10; -&gt; todo ngd">
+      <created>1449532821375</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1449532821375</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170325000" />
+    <option name="totallyTimeSpent" value="177839000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -1174,7 +1179,8 @@
     <MESSAGE value="ABT_Kernel v0.35&#10;-&gt; More Structure changes&#10;-&gt; Agent View Updated" />
     <MESSAGE value="ABT_Kernel v0.36&#10;-&gt; More Changes&#10;-&gt; Changed AgentView&#10;-&gt; Added Functions&#10;-&gt; Process Info and Add link Updated" />
     <MESSAGE value="ABT_Kernel v0.4&#10;-&gt; adl and ok procedures" />
-    <option name="LAST_COMMIT_MESSAGE" value="ABT_Kernel v0.4&#10;-&gt; adl and ok procedures" />
+    <MESSAGE value="ABT_Kernel v0.41&#10; -&gt; finish adl and done&#10; -&gt; todo ngd" />
+    <option name="LAST_COMMIT_MESSAGE" value="ABT_Kernel v0.41&#10; -&gt; finish adl and done&#10; -&gt; todo ngd" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1577,8 +1583,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/aiad_schedules/algorithm/ABT/ABT_Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4457626">
-          <caret line="60" column="78" selection-start-line="60" selection-start-column="78" selection-end-line="60" selection-end-column="78" />
+        <state vertical-scroll-proportion="0.76949155">
+          <caret line="189" column="22" selection-start-line="189" selection-start-column="22" selection-end-line="189" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

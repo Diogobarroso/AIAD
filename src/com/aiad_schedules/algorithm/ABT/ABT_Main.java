@@ -187,6 +187,7 @@ public class ABT_Main extends Agent {
                 break;
             case 4:
                 msgToSend = new ACLMessage(ACLMessage.FAILURE);
+                break;
         }
         try {
 
