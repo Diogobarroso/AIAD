@@ -25,6 +25,7 @@ public class ABT extends Base {
         }
 
         public Stored(String storedAgent, int storedDay, Event storedEvent) {
+
             this.storedAgent = storedAgent;
             this.storedDay = storedDay;
             this.storedEvent = storedEvent;
@@ -94,7 +95,7 @@ public class ABT extends Base {
         }
 
         // Sets
-        public com.aiad_schedules.schedule.Event getSelfEvent() {
+        public Event getSelfEvent() {
 
             return selfEvent;
         }
@@ -149,11 +150,11 @@ public class ABT extends Base {
     }
 
     // Functions
-    public int findAgentView(ArrayList<ABT.Stored> view, String agent){
+    public int findAgentView(ArrayList<ABT.Stored> view, String agent) {
 
-        for(int i = 0; i < view.size(); i++){
+        for (int i = 0; i < view.size(); i++) {
 
-            if(view.get(i).getStoredAgent().equals(agent)) {
+            if (view.get(i).getStoredAgent().equals(agent)) {
 
                 return i;
             }

@@ -29,14 +29,13 @@ public class ABT_Functions {
     }
 
     // Sets Value in Agent View
-    public static ABT addAgentView(ABT Agent, ABT_Message msg, String msgSender, Event controlEvent){
+    public static ABT addAgentView(ABT Agent, ABT_Message msg, String msgSender, Event controlEvent) {
 
         // Adds message to the view
-        if(Agent.getAgentView().isEmpty()){
+        if (Agent.getAgentView().isEmpty()) {
 
             Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
-        }
-        else{
+        } else {
 
             int find = Agent.findAgentView(Agent.getAgentView(), msgSender);
             Agent.getAgentView().get(find).setStoredAgent(msgSender);
@@ -45,5 +44,19 @@ public class ABT_Functions {
         }
 
         return Agent;
+    }
+
+    // Sets Value in NoGood Store
+    public static ABT addNoGood(ABT Agent, ABT_Message msg, String msgSender, Event controlEvent) {
+
+        Agent.getNoGood().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
+
+        return Agent;
+    }
+
+    // Chooses a new Value for the starter agent
+    public static ABT.Self chooseValue(ABT Agent) {
+
+        return null;
     }
 }

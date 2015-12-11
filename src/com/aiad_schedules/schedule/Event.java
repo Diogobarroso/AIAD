@@ -93,6 +93,9 @@ public class Event {
 
         if (intervenients.get(0).equals("null") && intervenients.size() == 1) {
 
+            Intervenients = new ArrayList<>();
+        } else {
+
             Intervenients = intervenients;
         }
 
@@ -163,7 +166,7 @@ public class Event {
 
             return false;
         }
-        if (!(this.Description.equals(e.Description))){
+        if (!(this.Description.equals(e.Description))) {
 
             return false;
         }
@@ -171,7 +174,7 @@ public class Event {
         return this.Priority == e.Priority;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
 
         return this.Description.equals("null");
     }

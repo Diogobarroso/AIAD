@@ -69,7 +69,7 @@ public class ABT_Main extends Agent {
                         if (DEBUG) System.out.println("Control intervinients: " + Control_Intervenients);
 
                         // Verifies if all values are consistent with the view
-                        if (Control_Intervenients - 1 == ABT_Agent.getAgentView().size()) {
+                        if (Control_Intervenients == ABT_Agent.getAgentView().size()) {
 
                             if (ABT_Procedures.CheckAgentView(ABT_Agent)) {
 
@@ -78,7 +78,7 @@ public class ABT_Main extends Agent {
                                 for (int i = 0; i < ABT_Agent.getAgentView().size(); i++) {
 
                                     response = new ABT_Message("done");
-                                    sendMessage(response, msgSender, 2);
+                                    sendMessage(response, msgSender, 3);
                                 }
                             }
                         }
@@ -99,6 +99,7 @@ public class ABT_Main extends Agent {
 
                         Control_Day = msg.getDay();
                         Control_Event = msg.toEvent();
+                        Control_Intervenients = msg.getIntervenients().size() - 1;
 
                         ABT_Message response;
 
@@ -131,7 +132,13 @@ public class ABT_Main extends Agent {
                 // ngd Message Actions
                 if (msg.getType().equals("ngd")) {
 
-                    ABT_Agent = ABT_Procedures.ResolveConflict(ABT_Agent, msg, msgSender);
+                    try {
+
+                        ABT_Agent = ABT_Procedures.ResolveConflict(ABT_Agent, msg, msgSender);
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -292,7 +299,7 @@ public class ABT_Main extends Agent {
                     // Sets Control Event
                     Control_Day = arguments.getDay();
                     Control_Event = arguments.toEvent();
-                    Control_Intervenients = arguments.getIntervenients().size();
+                    Control_Intervenients = arguments.getIntervenients().size() - 1;
 
                     // Sets Self View
                     ABT_Agent.setAgentSelf(new ABT.Self(Control_Day, Control_Event));

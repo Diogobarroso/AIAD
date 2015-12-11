@@ -128,11 +128,11 @@ public class ABT_Message {
 
     // Functions
     @Override
-    public String toString(){
+    public String toString() {
 
         String out = getType() + "," + getDescription() + "," + getPriority() + "," + getDay() + "," + getHour();
 
-        for(int i = 0; i < getIntervenients().size(); i++){
+        for (int i = 0; i < getIntervenients().size(); i++) {
 
             out += "," + getIntervenients().get(i);
         }
@@ -141,7 +141,7 @@ public class ABT_Message {
     }
 
     // Creates an Event from the Message
-    public Event toEvent() throws Exception{
+    public Event toEvent() throws Exception {
 
         return new Event(getHour(), getDescription(), getIntervenients(), getPriority());
     }
