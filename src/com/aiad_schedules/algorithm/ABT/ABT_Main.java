@@ -129,7 +129,7 @@ public class ABT_Main extends Agent {
 
                 // ngd Message Actions
                 if (msg.getType().equals("ngd")) {
-
+                    
                     ABT_Agent = ABT_Procedures.ResolveConflict(ABT_Agent, msg, msgSender);
                 }
             }
