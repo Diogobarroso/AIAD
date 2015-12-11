@@ -55,9 +55,10 @@ public class ABT_Procedures {
         Agent = ABT_Functions.addAgentView(Agent, msg, msgSender, controlEvent);
 
         // Adds value to nogood store
-        Agent = ABT_Functions.addNoGood(Agent, msg, msgSender, controlEvent);
+        Agent = ABT_Functions.addNoGood(Agent, msg, controlEvent);
 
-        
+        // Sets a new value for Self
+        Agent.setAgentSelf(ABT_Functions.chooseValue(Agent));
 
         return Agent;
     }
