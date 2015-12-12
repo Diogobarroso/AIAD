@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class ABT_Main extends Agent {
 
     // ### ACTIVATE FOR TXT DEBUG ###
-    static protected boolean DEBUG = true;
+    static protected boolean DEBUG = false;
     // ### ACTIVATE FOR TXT DEBUG ###
 
     // Variables
@@ -55,6 +55,8 @@ public class ABT_Main extends Agent {
 
             ABT_Message msg = new ABT_Message(msgDecode);
 
+            System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n Message Received from " + msgSender + "\tMessage type: " + msg.getType());
+
             // Processes the Message
             if (msgReceived.getPerformative() == ACLMessage.ACCEPT_PROPOSAL) {
 
@@ -81,8 +83,10 @@ public class ABT_Main extends Agent {
                                 for (int i = 0; i < ABT_Agent.getAgentView().size(); i++) {
 
                                     response = new ABT_Message("done");
-                                    sendMessage(response, msgSender, 3);
+                                    sendMessage(response, ABT_Agent.getAgentView().get(i).getStoredAgent(), 3);
                                 }
+
+                                end = true;
                             }
                         }
                     } catch (Exception e) {
@@ -199,6 +203,9 @@ public class ABT_Main extends Agent {
                 if (msg.getType().equals("done")) {
 
                     ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+
+                    // Terminates
+                    end = true;
                 }
             }
         }

@@ -8,7 +8,7 @@ import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 public class ABT_Procedures {
 
     // ### ACTIVATE FOR TXT DEBUG ###
-    static protected boolean DEBUG = true;
+    static protected boolean DEBUG = false;
     // ### ACTIVATE FOR TXT DEBUG ###
 
     // Agent View Checker

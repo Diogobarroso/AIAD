@@ -7,6 +7,10 @@ import java.util.ArrayList;
 // ABT Agent Message Structure Class
 public class ABT_Message {
 
+    // ### ACTIVATE FOR TXT DEBUG ###
+    static protected boolean DEBUG = false;
+    // ### ACTIVATE FOR TXT DEBUG ###
+
     // Variables
     private String type;
     private String description;

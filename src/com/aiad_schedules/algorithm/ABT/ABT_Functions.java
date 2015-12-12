@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ABT_Functions {
 
     // ### ACTIVATE FOR TXT DEBUG ###
-    static protected boolean DEBUG = true;
+    static protected boolean DEBUG = false;
     // ### ACTIVATE FOR TXT DEBUG ###
 
     // Checks if the AgentView and AgentSelf is Consistent
