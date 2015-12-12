@@ -7,6 +7,10 @@ import java.util.ArrayList;
 // ABT Agent Message Structure Class
 public class ABT_Message {
 
+    // ### ACTIVATE FOR TXT DEBUG ###
+    static protected boolean DEBUG = false;
+    // ### ACTIVATE FOR TXT DEBUG ###
+
     // Variables
     private String type;
     private String description;
@@ -42,6 +46,15 @@ public class ABT_Message {
         this.priority = priority;
         this.day = day;
         this.hour = hour;
+    }
+
+    public ABT_Message(String type, int day, int hour) {
+
+        this.hour = hour;
+        this.day = day;
+        this.type = type;
+        this.description = "";
+        this.priority = 0;
     }
 
     public ABT_Message(String[] msg) {
@@ -128,11 +141,11 @@ public class ABT_Message {
 
     // Functions
     @Override
-    public String toString(){
+    public String toString() {
 
         String out = getType() + "," + getDescription() + "," + getPriority() + "," + getDay() + "," + getHour();
 
-        for(int i = 0; i < getIntervenients().size(); i++){
+        for (int i = 0; i < getIntervenients().size(); i++) {
 
             out += "," + getIntervenients().get(i);
         }
@@ -141,7 +154,7 @@ public class ABT_Message {
     }
 
     // Creates an Event from the Message
-    public Event toEvent() throws Exception{
+    public Event toEvent() throws Exception {
 
         return new Event(getHour(), getDescription(), getIntervenients(), getPriority());
     }

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 // ABT Kernel Functions
 public class ABT_Functions {
 
+    // ### ACTIVATE FOR TXT DEBUG ###
+    static protected boolean DEBUG = false;
+    // ### ACTIVATE FOR TXT DEBUG ###
+
     // Checks if the AgentView and AgentSelf is Consistent
     public static boolean Consistent(ABT.Self self, ArrayList<ABT.Stored> view) {
 
@@ -29,21 +33,89 @@ public class ABT_Functions {
     }
 
     // Sets Value in Agent View
-    public static ABT addAgentView(ABT Agent, ABT_Message msg, String msgSender, Event controlEvent){
+    public static ABT addAgentView(ABT Agent, ABT_Message msg, String msgSender, Event controlEvent) {
 
         // Adds message to the view
-        if(Agent.getAgentView().isEmpty()){
+        if (Agent.getAgentView().isEmpty()) {
 
             Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
-        }
-        else{
+        } else {
 
             int find = Agent.findAgentView(Agent.getAgentView(), msgSender);
-            Agent.getAgentView().get(find).setStoredAgent(msgSender);
-            Agent.getAgentView().get(find).setStoredDay(msg.getDay());
-            Agent.getAgentView().get(find).setStoredEvent(controlEvent);
+            if (find != -1) {
+
+                Agent.getAgentView().get(find).setStoredAgent(msgSender);
+                Agent.getAgentView().get(find).setStoredDay(msg.getDay());
+                Agent.getAgentView().get(find).setStoredEvent(controlEvent);
+            }
+            else{
+
+                Agent.getAgentView().add(new ABT.Stored(msgSender, msg.getDay(), controlEvent));
+            }
         }
 
         return Agent;
+    }
+
+    // Sets Value in NoGood Store
+    public static ABT addNoGood(ABT Agent, ABT_Message msg, Event controlEvent) {
+
+        Agent.getNoGood().add(new ABT.Conflict(msg.getDay(), controlEvent.getHour()));
+
+        return Agent;
+    }
+
+    // Chooses a new Value for the starter agent
+    public static ABT.Self chooseValue(ABT Agent) throws Exception {
+
+        // Sets first day to find as last selected day
+        boolean set = true;
+        int chosenDay = Agent.getAgentSelf().getSelfDay();
+        int currentDay = 0;
+
+        if (DEBUG) System.err.println("CHOICE --- Choosing Value for " + Agent.getAgentName());
+
+        do {
+
+            if (set) {
+
+                if (DEBUG) System.err.println("CHOICE --- set equal");
+                currentDay = chosenDay;
+            }
+
+            if (!(!set && currentDay == chosenDay)) {
+
+                if (DEBUG) System.err.println("CHOICE --- in choice cycle");
+                for (int i = 0; i < Agent.getAgentSchedule().getWeekdays().get(currentDay).getSlots().size(); i++) {
+
+                    // In-case this value is empty on initiator agent
+                    if (Agent.getAgentSchedule().getWeekdays().get(currentDay).getSlots().get(i).isEmpty()) {
+                        if (DEBUG) System.err.println("CHOICE --- found empty");
+                        // Checks NoGood
+                        for (int j = 0; j < Agent.getNoGood().size(); j++) {
+
+                            // If it is not in the nogood it will assign
+                            if (!Agent.getNoGood().get(j).hasConflict(currentDay, i + 8)) {
+                                if (DEBUG) System.err.println("CHOICE --- i am not on view");
+                                if (DEBUG) System.err.println("CHOICE --- i value " + i);
+                                Event newSelfEvent = new Event(i + 8, Agent.getAgentSelf().getSelfEvent().getDescription(), Agent.getAgentSelf().getSelfEvent().getIntervenients(), Agent.getAgentSelf().getSelfEvent().getPriority());
+                                return new ABT.Self(currentDay, newSelfEvent);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (set) {
+
+                set = false;
+                currentDay = 0;
+            } else {
+
+                currentDay++;
+            }
+        } while (currentDay < 5);
+
+        return null;
     }
 }

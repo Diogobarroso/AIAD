@@ -1,1 +1,1 @@
-http://ssla.fe.up.pt:7778/acc
+http://DESKTOP-OB0RG4V:7778/acc

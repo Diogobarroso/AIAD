@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class ABT extends Base {
 
     // Inner Classes
-    // Stored Info on AgentView and Nogoods
+    // Stored Info on AgentView
     public static class Stored {
 
         // Variables
@@ -25,6 +25,7 @@ public class ABT extends Base {
         }
 
         public Stored(String storedAgent, int storedDay, Event storedEvent) {
+
             this.storedAgent = storedAgent;
             this.storedDay = storedDay;
             this.storedEvent = storedEvent;
@@ -63,6 +64,49 @@ public class ABT extends Base {
         }
     }
 
+    // Conflict Info on NoGood
+    public static class Conflict{
+
+        // Variables
+        private int conflictDay;
+        private int conflictHour;
+
+        // Constructors
+        public Conflict(int conflictDay, int conflictHour) {
+
+            this.conflictDay = conflictDay;
+            this.conflictHour = conflictHour;
+        }
+
+        // Gets
+        public int getConflictDay() {
+
+            return conflictDay;
+        }
+
+        public int getConflictHour() {
+
+            return conflictHour;
+        }
+
+        // Sets
+        public void setConflictDay(int conflictDay) {
+
+            this.conflictDay = conflictDay;
+        }
+
+        public void setConflictHour(int conflictHour) {
+
+            this.conflictHour = conflictHour;
+        }
+
+        // Functions
+        public boolean hasConflict(int day, int hour){
+
+            return this.conflictDay == day && this.conflictHour == hour;
+        }
+    }
+
     // Agent's self view
     public static class Self {
 
@@ -94,7 +138,7 @@ public class ABT extends Base {
         }
 
         // Sets
-        public com.aiad_schedules.schedule.Event getSelfEvent() {
+        public Event getSelfEvent() {
 
             return selfEvent;
         }
@@ -106,7 +150,7 @@ public class ABT extends Base {
     }
 
     // Variables
-    private ArrayList<Stored> NoGood = new ArrayList<>();
+    private ArrayList<Conflict> NoGood = new ArrayList<>();
     private ArrayList<Stored> AgentView = new ArrayList<>();
     private Self AgentSelf = new Self();
 
@@ -117,7 +161,7 @@ public class ABT extends Base {
     }
 
     // Gets
-    public ArrayList<Stored> getNoGood() {
+    public ArrayList<Conflict> getNoGood() {
 
         return NoGood;
     }
@@ -133,7 +177,7 @@ public class ABT extends Base {
     }
 
     // Sets
-    public void setNoGood(ArrayList<Stored> noGood) {
+    public void setNoGood(ArrayList<Conflict> noGood) {
 
         NoGood = noGood;
     }
@@ -149,16 +193,16 @@ public class ABT extends Base {
     }
 
     // Functions
-    public int findAgentView(ArrayList<ABT.Stored> view, String agent){
+    public int findAgentView(ArrayList<ABT.Stored> view, String agent) {
 
-        for(int i = 0; i < view.size(); i++){
+        for (int i = 0; i < view.size(); i++) {
 
-            if(view.get(i).getStoredAgent().equals(agent)) {
+            if (view.get(i).getStoredAgent().equals(agent)) {
 
                 return i;
             }
         }
 
-        return 0;
+        return -1;
     }
 }
