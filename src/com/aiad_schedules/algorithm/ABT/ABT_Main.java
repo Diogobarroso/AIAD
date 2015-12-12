@@ -55,8 +55,6 @@ public class ABT_Main extends Agent {
 
             ABT_Message msg = new ABT_Message(msgDecode);
 
-            System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n Message Received from " + msgSender + "\tMessage type: " + msg.getType());
-
             // Processes the Message
             if (msgReceived.getPerformative() == ACLMessage.ACCEPT_PROPOSAL) {
 
@@ -77,6 +75,8 @@ public class ABT_Main extends Agent {
                             if (DEBUG) System.err.println("I am conistent!");
 
                             if (ABT_Procedures.CheckAgentView(ABT_Agent)) {
+
+                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent! Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
 
                                 ABT_Message response;
                                 // Send terminate Message
@@ -113,12 +113,14 @@ public class ABT_Main extends Agent {
                         switch (ABT_Procedures.ProcessInfo(ABT_Agent, msg, msgSender)) {
 
                             case 0: // Valid
+                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I accept this Value: " + msg.toEvent().toString());
                                 response = new ABT_Message("adl", msg.getDescription(), msg.getPriority(), msg.getDay(), msg.getHour(), msg.getIntervenients());
                                 sendMessage(response, msgSender, 2);
                                 break;
                             case 1: // Already Assigned
                                 break;
                             case 2: // Another Assigned Value
+                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I don't accept this Value: " + msg.toEvent().toString());
                                 response = new ABT_Message("ngd", ABT_Agent.getAgentSelf().getSelfEvent().getDescription(), ABT_Agent.getAgentSelf().getSelfEvent().getPriority(), ABT_Agent.getAgentSelf().getSelfDay(), ABT_Agent.getAgentSelf().getSelfEvent().getHour(), ABT_Agent.getAgentSelf().getSelfEvent().getIntervenients());
                                 sendMessage(response, msgSender, 1);
                                 break;
@@ -149,6 +151,8 @@ public class ABT_Main extends Agent {
                         // In case a new value is set
                         if (ABT_Agent.getAgentSelf() != null) {
 
+                            System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I set this new value: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+
                             Control_Day = ABT_Agent.getAgentSelf().getSelfDay();
                             Control_Event = ABT_Agent.getAgentSelf().getSelfEvent();
                             Control_Intervenients = ABT_Agent.getAgentSelf().getSelfEvent().getIntervenients().size() - 1;
@@ -168,6 +172,8 @@ public class ABT_Main extends Agent {
                         } // In case it is null (no solution)
                         else {
 
+                            System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I can't set a new value! TERMINATING!");
+
                             response = new ABT_Message("stp");
 
                             // Runs for every intervenient
@@ -179,6 +185,9 @@ public class ABT_Main extends Agent {
                                     sendMessage(response, response.getIntervenients().get(i), 4); // sends fail message
                                 }
                             }
+
+                            // Terminates
+                            end = true;
                         }
                     } catch (Exception e) {
 
@@ -192,6 +201,8 @@ public class ABT_Main extends Agent {
                 // stp Message Action
                 if (msg.getType().equals("stp")) {
 
+                    System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n Received terminate message! TERMINATING!");
+
                     // Terminates the Agent
                     end = true;
                 }
@@ -203,6 +214,8 @@ public class ABT_Main extends Agent {
                 if (msg.getType().equals("done")) {
 
                     ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+
+                    System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent! Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
 
                     // Terminates
                     end = true;
@@ -348,6 +361,8 @@ public class ABT_Main extends Agent {
                     Control_Day = arguments.getDay();
                     Control_Event = arguments.toEvent();
                     Control_Intervenients = arguments.getIntervenients().size() - 1;
+
+                    System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I want to schedule this meeting: " + arguments.toEvent().toString());
 
                     // Sets Self View
                     ABT_Agent.setAgentSelf(new ABT.Self(Control_Day, Control_Event));
