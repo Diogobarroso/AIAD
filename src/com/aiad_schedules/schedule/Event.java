@@ -2,6 +2,7 @@ package com.aiad_schedules.schedule;
 
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 // Event of a day in the schedule (meeting)
 public class Event {
@@ -143,9 +144,21 @@ public class Event {
     @Override
     public String toString() {
 
-        return getHour() + " - Description: " + getDescription()
+        return getHour() + ":00h - Description: " + getDescription()
                 + " - Intervenients: " + getIntervenients().toString()
                 + " - " + "Priority: " + getPriority();
+    }
+
+    public String toFile(){
+
+        String out = getHour() - 8 + ";" + getDescription() + ";" + getPriority() + ";" + getIntervenients().get(0);
+
+        for(int i = 1; i < getIntervenients().size(); i++){
+
+            out += "," + getIntervenients().get(i);
+        }
+
+        return out;
     }
 
     public static ArrayList<String> setArrayList(String[] in) {

@@ -1,8 +1,8 @@
 package com.aiad_schedules.algorithm.ABT;
 
 import com.aiad_schedules.agent.ABT;
-
 import com.aiad_schedules.schedule.Event;
+
 import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.domain.DFService;
@@ -76,7 +76,11 @@ public class ABT_Main extends Agent {
 
                             if (ABT_Procedures.CheckAgentView(ABT_Agent)) {
 
-                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent! Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent!\n Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+
+                                // Writes to own file
+                                ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+                                ABT_Agent.writeAgentSchedule("files/" + ABT_Agent.getAgentName() + ".csv");
 
                                 ABT_Message response;
                                 // Send terminate Message
@@ -120,7 +124,7 @@ public class ABT_Main extends Agent {
                             case 1: // Already Assigned
                                 break;
                             case 2: // Another Assigned Value
-                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I don't accept this Value: " + msg.toEvent().toString());
+                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I don't accept this Value: " + msg.toEvent().toString() + "\n My value is: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
                                 response = new ABT_Message("ngd", ABT_Agent.getAgentSelf().getSelfEvent().getDescription(), ABT_Agent.getAgentSelf().getSelfEvent().getPriority(), ABT_Agent.getAgentSelf().getSelfDay(), ABT_Agent.getAgentSelf().getSelfEvent().getHour(), ABT_Agent.getAgentSelf().getSelfEvent().getIntervenients());
                                 sendMessage(response, msgSender, 1);
                                 break;
@@ -213,9 +217,18 @@ public class ABT_Main extends Agent {
                 // done Message Action
                 if (msg.getType().equals("done")) {
 
-                    ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+                    try {
 
-                    System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent! Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+                        ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+
+                        System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent!\n Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+
+                        // Writes to own file
+                        ABT_Agent.writeAgentSchedule("files/" + ABT_Agent.getAgentName() + ".csv");
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
 
                     // Terminates
                     end = true;

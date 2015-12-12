@@ -1,4 +1,4 @@
-package com.aiad_schedules.input;
+package com.aiad_schedules.file;
 
 import com.aiad_schedules.schedule.Schedule;
 
@@ -9,28 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-// Reads the related CSV file with the schedule information of an ABT
+// Reads the related CSV file with the schedule information
 public class csvReader {
-
-    // Checks if it is a CSV file
-    private static void csvControl(String csvFile) throws IOException {
-
-        String[] filePath = csvFile.split(Pattern.quote("/"));
-        String[] fileName = filePath[filePath.length - 1].split(Pattern.quote("."));
-
-        if (fileName.length == 2) {
-
-            if (!fileName[1].equals("csv")) {
-
-                String Error = "Invalid File! Must be a \".csv\" file!";
-                throw new IOException(Error);
-            }
-        } else {
-
-            String Error = "Invalid File! Must be a \".csv\" file!";
-            throw new IOException(Error);
-        }
-    }
 
     // Gets the User/Agent name from CSV file
     public static String getUser(String csvFile) throws IOException {
@@ -40,7 +20,7 @@ public class csvReader {
         BufferedReader bufferFile = new BufferedReader(new FileReader(csvFile));
 
         // Checks the file extension
-        csvControl(csvFile);
+        csvControl.check(csvFile);
 
         String line;
 
@@ -61,7 +41,7 @@ public class csvReader {
             }
         } else {
 
-            String Error = "ABT name in file Undetected!";
+            String Error = "Name in file Undetected!";
             bufferFile.close();
             throw new IOException(Error);
         }
@@ -75,7 +55,7 @@ public class csvReader {
         BufferedReader bufferFile = new BufferedReader(new FileReader(csvFile));
 
         // Checks the file extension
-        csvControl(csvFile);
+        csvControl.check(csvFile);
 
         String line;
         String[] lineSplit;
