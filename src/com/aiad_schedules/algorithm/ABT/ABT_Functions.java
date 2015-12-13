@@ -4,12 +4,13 @@ import com.aiad_schedules.agent.ABT;
 import com.aiad_schedules.schedule.Event;
 
 import java.util.ArrayList;
+import java.util.concurrent.SynchronousQueue;
 
 // ABT Kernel Functions
 public class ABT_Functions {
 
     // ### ACTIVATE FOR TXT DEBUG ###
-    static protected boolean DEBUG = false;
+    static protected boolean DEBUG = true;
     // ### ACTIVATE FOR TXT DEBUG ###
 
     // Checks if the AgentView and AgentSelf is Consistent
@@ -60,7 +61,17 @@ public class ABT_Functions {
     // Sets Value in NoGood Store
     public static ABT addNoGood(ABT Agent, ABT_Message msg, Event controlEvent) {
 
-        Agent.getNoGood().add(new ABT.Conflict(msg.getDay(), controlEvent.getHour()));
+        if (Agent.getNoGood().isEmpty()) {
+
+            Agent.getNoGood().add(new ABT.Conflict(msg.getDay(), controlEvent.getHour()));
+        } else {
+
+            int find = Agent.findNoGood(Agent.getNoGood(), msg.getDay(), controlEvent.getHour());
+            if (find == -1) {
+
+                Agent.getNoGood().add(new ABT.Conflict(msg.getDay(), controlEvent.getHour()));
+            }
+        }
 
         return Agent;
     }
@@ -90,17 +101,15 @@ public class ABT_Functions {
 
                     // In-case this value is empty on initiator agent
                     if (Agent.getAgentSchedule().getWeekdays().get(currentDay).getSlots().get(i).isEmpty()) {
+
                         if (DEBUG) System.err.println("CHOICE --- found empty");
                         // Checks NoGood
-                        for (int j = 0; j < Agent.getNoGood().size(); j++) {
+                        if(Agent.findNoGood(Agent.getNoGood(), currentDay, (i+8)) == -1){
 
-                            // If it is not in the nogood it will assign
-                            if (!Agent.getNoGood().get(j).hasConflict(currentDay, i + 8)) {
-                                if (DEBUG) System.err.println("CHOICE --- i am not on view");
-                                if (DEBUG) System.err.println("CHOICE --- i value " + i);
-                                Event newSelfEvent = new Event(i + 8, Agent.getAgentSelf().getSelfEvent().getDescription(), Agent.getAgentSelf().getSelfEvent().getIntervenients(), Agent.getAgentSelf().getSelfEvent().getPriority());
-                                return new ABT.Self(currentDay, newSelfEvent);
-                            }
+                            if (DEBUG) System.err.println("CHOICE --- i am not on view");
+                            if (DEBUG) System.err.println("CHOICE --- i value " + i);
+                            Event newSelfEvent = new Event(i + 8, Agent.getAgentSelf().getSelfEvent().getDescription(), Agent.getAgentSelf().getSelfEvent().getIntervenients(), Agent.getAgentSelf().getSelfEvent().getPriority());
+                            return new ABT.Self(currentDay, newSelfEvent);
                         }
                     }
                 }

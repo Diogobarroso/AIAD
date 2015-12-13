@@ -99,12 +99,6 @@ public class ABT extends Base {
 
             this.conflictHour = conflictHour;
         }
-
-        // Functions
-        public boolean hasConflict(int day, int hour){
-
-            return this.conflictDay == day && this.conflictHour == hour;
-        }
     }
 
     // Agent's self view
@@ -198,6 +192,19 @@ public class ABT extends Base {
         for (int i = 0; i < view.size(); i++) {
 
             if (view.get(i).getStoredAgent().equals(agent)) {
+
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public int findNoGood(ArrayList<ABT.Conflict> nogood, int day, int hour){
+
+        for (int i = 0; i < nogood.size(); i++) {
+
+            if (nogood.get(i).getConflictDay() == day && nogood.get(i).getConflictHour() == hour) {
 
                 return i;
             }
