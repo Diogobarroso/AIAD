@@ -4,13 +4,12 @@ import com.aiad_schedules.agent.ABT;
 import com.aiad_schedules.schedule.Event;
 
 import java.util.ArrayList;
-import java.util.concurrent.SynchronousQueue;
 
 // ABT Kernel Functions
 public class ABT_Functions {
 
     // ### ACTIVATE FOR TXT DEBUG ###
-    static protected boolean DEBUG = true;
+    static protected boolean DEBUG = false;
     // ### ACTIVATE FOR TXT DEBUG ###
 
     // Checks if the AgentView and AgentSelf is Consistent
