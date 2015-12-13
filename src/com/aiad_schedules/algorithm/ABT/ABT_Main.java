@@ -311,7 +311,7 @@ public class ABT_Main extends Agent {
     // Agent Setup Operations
     protected void setup() {
 
-        if (DEBUG) System.out.println("Agent " + getAID().getName() + " starting.");
+        System.out.println("Agent " + getAID().getName() + " starting.");
 
         // Set Agent info
         String[] nameTrim = getAID().getName().split(Pattern.quote("@"));
