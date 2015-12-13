@@ -1,6 +1,7 @@
 package com.aiad_schedules.agent;
 
-import com.aiad_schedules.input.csvReader;
+import com.aiad_schedules.file.csvReader;
+import com.aiad_schedules.file.csvWriter;
 import com.aiad_schedules.schedule.Schedule;
 
 import java.io.IOException;
@@ -45,5 +46,10 @@ public class Base {
     public void setAgentSchedule(String agentFile) throws IOException {
 
         AgentSchedule = csvReader.getSchedule(agentFile);
+    }
+
+    public void writeAgentSchedule(String agentFile) throws IOException {
+
+        csvWriter.setSchedule(agentFile, getAgentName(), getAgentSchedule());
     }
 }

@@ -1,8 +1,9 @@
 package com.aiad_schedules.algorithm.ABT;
 
 import com.aiad_schedules.agent.ABT;
-
+import com.aiad_schedules.algorithm.statistics.Statistics;
 import com.aiad_schedules.schedule.Event;
+
 import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.domain.DFService;
@@ -21,12 +22,17 @@ public class ABT_Main extends Agent {
     static protected boolean DEBUG = false;
     // ### ACTIVATE FOR TXT DEBUG ###
 
+    // ### ACTIVATE FOR STATISTICS ###
+    static protected boolean STATS = true;
+    // ### ACTIVATE FOR STATISTICS ###
+
     // Variables
     private boolean endService = false;
     private ABT ABT_Agent = new ABT();
     private int Control_Day = -1;
     private Event Control_Event = null;
     private int Control_Intervenients = 0;
+    private Statistics stats;
 
     // Internal Behaviour Classes
     // ABT Kernel Behaviour Class
@@ -61,6 +67,7 @@ public class ABT_Main extends Agent {
                 // adl Message Actions
                 if (msg.getType().equals("adl")) {
 
+                    if(STATS) stats.receivedMessage("adl");
                     try {
 
                         ABT_Agent = ABT_Procedures.AddLink(ABT_Agent, msg, msgSender);
@@ -76,7 +83,11 @@ public class ABT_Main extends Agent {
 
                             if (ABT_Procedures.CheckAgentView(ABT_Agent)) {
 
-                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent! Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent!\n Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+
+                                // Writes to own file
+                                ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+                                ABT_Agent.writeAgentSchedule("files/" + ABT_Agent.getAgentName() + ".csv");
 
                                 ABT_Message response;
                                 // Send terminate Message
@@ -84,7 +95,10 @@ public class ABT_Main extends Agent {
 
                                     response = new ABT_Message("done");
                                     sendMessage(response, ABT_Agent.getAgentView().get(i).getStoredAgent(), 3);
+                                    if(STATS) stats.sentMessage("done");
                                 }
+
+                                if(STATS) System.err.println(stats.toString());
 
                                 end = true;
                             }
@@ -101,6 +115,7 @@ public class ABT_Main extends Agent {
                 // ok? Message Actions
                 if (msg.getType().equals("ok?")) {
 
+                    if(STATS) stats.receivedMessage("ok?");
                     // Sets new Control Values
                     try {
 
@@ -116,13 +131,15 @@ public class ABT_Main extends Agent {
                                 System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I accept this Value: " + msg.toEvent().toString());
                                 response = new ABT_Message("adl", msg.getDescription(), msg.getPriority(), msg.getDay(), msg.getHour(), msg.getIntervenients());
                                 sendMessage(response, msgSender, 2);
+                                if(STATS) stats.sentMessage("adl");
                                 break;
                             case 1: // Already Assigned
                                 break;
                             case 2: // Another Assigned Value
-                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I don't accept this Value: " + msg.toEvent().toString());
+                                System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n I don't accept this Value: " + msg.toEvent().toString() + "\n My value is: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
                                 response = new ABT_Message("ngd", ABT_Agent.getAgentSelf().getSelfEvent().getDescription(), ABT_Agent.getAgentSelf().getSelfEvent().getPriority(), ABT_Agent.getAgentSelf().getSelfDay(), ABT_Agent.getAgentSelf().getSelfEvent().getHour(), ABT_Agent.getAgentSelf().getSelfEvent().getIntervenients());
                                 sendMessage(response, msgSender, 1);
+                                if(STATS) stats.sentMessage("ngd");
                                 break;
                             default:
                                 System.err.println("Error Encountered Processing Info!!");
@@ -140,6 +157,8 @@ public class ABT_Main extends Agent {
 
                 // ngd Message Actions
                 if (msg.getType().equals("ngd")) {
+
+                    if(STATS) stats.receivedMessage("ngd");
 
                     try {
 
@@ -166,6 +185,7 @@ public class ABT_Main extends Agent {
                                 // Only in case the intervenient is not itself
                                 if (!response.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
 
+                                    if(STATS) stats.sentMessage("ok?");
                                     sendMessage(response, response.getIntervenients().get(i), 0); //restarts the procedure
                                 }
                             }
@@ -182,6 +202,7 @@ public class ABT_Main extends Agent {
                                 // Only in case the intervenient is not itself
                                 if (!Control_Event.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
 
+                                    if(STATS) stats.sentMessage("stp");
                                     sendMessage(response, response.getIntervenients().get(i), 4); // sends fail message
                                 }
                             }
@@ -201,6 +222,8 @@ public class ABT_Main extends Agent {
                 // stp Message Action
                 if (msg.getType().equals("stp")) {
 
+                    if(STATS) stats.receivedMessage("stp");
+
                     System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n Received terminate message! TERMINATING!");
 
                     // Terminates the Agent
@@ -213,11 +236,23 @@ public class ABT_Main extends Agent {
                 // done Message Action
                 if (msg.getType().equals("done")) {
 
-                    ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+                    if(STATS) stats.receivedMessage("done");
 
-                    System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent! Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+                    try {
+
+                        ABT_Agent = ABT_Procedures.ChangeValues(ABT_Agent);
+
+                        System.out.println("Current Agent: " + ABT_Agent.getAgentName() + "\n All values are consistent!\n Assigning: " + ABT_Agent.getAgentSelf().getSelfEvent().toString());
+
+                        // Writes to own file
+                        ABT_Agent.writeAgentSchedule("files/" + ABT_Agent.getAgentName() + ".csv");
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
 
                     // Terminates
+                    if(STATS) System.err.println(stats.toString());
                     end = true;
                 }
             }
@@ -243,13 +278,13 @@ public class ABT_Main extends Agent {
         switch (type) {
 
             case 0:
-                msgToSend = new ACLMessage((ACLMessage.PROPOSE));
+                msgToSend = new ACLMessage(ACLMessage.PROPOSE);
                 break;
             case 1:
-                msgToSend = new ACLMessage((ACLMessage.REJECT_PROPOSAL));
+                msgToSend = new ACLMessage(ACLMessage.REJECT_PROPOSAL);
                 break;
             case 2:
-                msgToSend = new ACLMessage((ACLMessage.ACCEPT_PROPOSAL));
+                msgToSend = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
                 break;
             case 3:
                 msgToSend = new ACLMessage(ACLMessage.INFORM);
@@ -290,6 +325,9 @@ public class ABT_Main extends Agent {
             doDelete();
             e.printStackTrace();
         }
+
+        // Starts Statistics
+        if(STATS) stats = new Statistics(ABT_Agent.getAgentName());
 
         // Register in DF
         DFAgentDescription dfd = new DFAgentDescription(); // all agent descriptions
@@ -378,6 +416,7 @@ public class ABT_Main extends Agent {
                     if (!arguments.getIntervenients().get(i).equals(ABT_Agent.getAgentName())) {
 
                         sendMessage(arguments, arguments.getIntervenients().get(i), 0);
+                        if(STATS) stats.sentMessage("ok?");
                     }
                 }
             }
