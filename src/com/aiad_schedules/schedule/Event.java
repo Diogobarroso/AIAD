@@ -16,6 +16,7 @@ public class Event {
     private String Description;
     private ArrayList<String> Intervenients = new ArrayList<>();
     private int Priority;
+    private int cost;
 
     // Constructors
     public Event() {
@@ -124,6 +125,10 @@ public class Event {
         return Priority;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
     // Sets
     public void setDescription(String description) {
 
@@ -138,6 +143,10 @@ public class Event {
     public void setPriority(int priority) {
 
         Priority = priority;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     // Functions
@@ -190,5 +199,9 @@ public class Event {
     public boolean isEmpty() {
 
         return this.Description.equals("null");
+    }
+
+    public void incrementCost() {
+        cost++;
     }
 }
